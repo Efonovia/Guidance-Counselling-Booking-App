@@ -5,6 +5,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import AddIcon from '@mui/icons-material/Add';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import MessageIcon from '@mui/icons-material/Message';
 
 
 function Navbar({ children }) {
@@ -18,8 +20,9 @@ function Navbar({ children }) {
                             <i className="ti-close"></i>
                         </div>
                     </div>
-                    <ul id="sidebar_menu">
-                        <li>
+                    {/* super admin menu */}
+                    {/* <ul id="sidebar_menu">
+                        <li style={{ cursor: "pointer" }}>
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <PeopleIcon />
@@ -27,7 +30,7 @@ function Navbar({ children }) {
                                 <span>All Counsellors</span>
                             </a>
                         </li>
-                        <li>
+                        <li style={{ cursor: "pointer" }}>
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <AddIcon />
@@ -35,20 +38,47 @@ function Navbar({ children }) {
                                 <span>Create Appointment</span>
                             </a>
                         </li>
-                        <li>
+                        <li style={{ cursor: "pointer" }}>
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <PersonAddAltIcon />
                                 </div>
-                                <span>Add Counsellor</span>
+                                <span>Add New Counsellor</span>
                             </a>
                         </li>
-                        <li>
+                    </ul> */}
+
+                    <ul id="sidebar_menu">
+                        <li style={{ cursor: "pointer" }}>
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <CalendarMonthIcon />
                                 </div>
-                                <span>Schedules***</span>
+                                <span>My Schedule</span>
+                            </a>
+                        </li>
+                        <li style={{ cursor: "pointer" }}>
+                            <a className="has-arrow" href aria-expanded="false">
+                                <div className="icon_menu">
+                                    <AddIcon />
+                                </div>
+                                <span>Create Appointment</span>
+                            </a>
+                        </li>
+                        <li style={{ cursor: "pointer" }}>
+                            <a className="has-arrow" href aria-expanded="false">
+                                <div className="icon_menu">
+                                    <MessageIcon />
+                                </div>
+                                <span>Messages</span>
+                            </a>
+                        </li>
+                        <li style={{ cursor: "pointer" }}>
+                            <a className="has-arrow" href aria-expanded="false">
+                                <div className="icon_menu">
+                                    <HowToRegIcon />
+                                </div>
+                                <span>My Appointments</span>
                             </a>
                         </li>
                     </ul>

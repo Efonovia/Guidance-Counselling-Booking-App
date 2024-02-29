@@ -1,51 +1,164 @@
-<div class="main_content_iner ">
-    <div class="container-fluid p-0">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="dashboard_header mb_50">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="dashboard_header_title">
-                                <h3>Login</h3>
-                            </div>
+<div class="white_card card_height_100 mb_30">
+    <div class="white_card_header">
+        <div class="box_header m-0">
+            <div class="main-title">
+                <h3 class="m-0">Data table</h3>
+            </div>
+        </div>
+    </div>
+    <div class="white_card_body">
+        <div class="QA_section">
+            <div class="white_box_tittle list_header">
+                <h4>Table</h4>
+                <div class="box_right d-flex lms_block">
+                    <div class="serach_field_2">
+                        <div class="search_inner">
+                            <form active="#">
+                                <div class="search_field">
+                                    <input type="text" placeholder="Search content here...">
+                                </div>
+                                <button type="submit"> <i class="ti-search"></i> </button>
+                            </form>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="dashboard_breadcam text-end">
-                                <p><a href="index-2.html">Dashboard</a> <i class="fas fa-caret-right"></i> login</p>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="add_button ms-2">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#addcategory" class="btn_1">Add New</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
-                <div class="white_box mb_30">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
+            <div class="QA_table mb_30">
 
-                            <div class="modal-content cs_modal">
-                                <div class="modal-header justify-content-center theme_bg_1">
-                                    <h5 class="modal-title text_white">Log in</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="">
-                                            <input type="text" class="form-control" placeholder="Enter your email">
-                                        </div>
-                                        <div class="">
-                                            <input type="password" class="form-control" placeholder="Password">
-                                        </div>
-                                        <a href="#" class="btn_1 full_width text-center">Log in</a>
-                                        <p>Need an account? <a data-bs-toggle="modal" data-bs-target="#sing_up"
-                                                data-bs-dismiss="modal" href="#"> Sign Up</a></p>
-                                        <div class="text-center">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#forgot_password"
-                                                data-bs-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <table class="table lms_table_active dataTable no-footer dtr-inline" id="DataTables_Table_0"
+                        role="grid" aria-describedby="DataTables_Table_0_info" style="width: 697px;">
+                        <thead>
+                            <tr role="row">
+                                <th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 62px;" aria-sort="ascending"
+                                    aria-label="title: activate to sort column descending">title</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 89px;"
+                                    aria-label="Category: activate to sort column ascending">Category</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 87px;"
+                                    aria-label="Teacher: activate to sort column ascending">Teacher</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 83px;"
+                                    aria-label="Lesson: activate to sort column ascending">Lesson</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 53px;"
+                                    aria-label="Enrolled: activate to sort column ascending">Enrolled</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 39px;"
+                                    aria-label="Price: activate to sort column ascending">Price</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 74px;"
+                                    aria-label="Status: activate to sort column ascending">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="odd">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="even">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="even">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="even">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="even">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                            <tr role="row" class="even">
+                                <th scope="row" tabindex="0" class="sorting_1"> <a href="#" class="question_content">
+                                        title here 1</a></th>
+                                <td>Category name</td>
+                                <td>Teacher James</td>
+                                <td>Lessons name</td>
+                                <td>16</td>
+                                <td>$25.00</td>
+                                <td><a href="#" class="status_btn">Active</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
