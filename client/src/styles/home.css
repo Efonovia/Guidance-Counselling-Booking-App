@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 7rem;
+    gap: 6rem;
     background-image: url(../assets/img/home-bg.png);
 }
 
@@ -18,7 +18,7 @@
 
 .home-header > h1 {
     font-weight: 900;
-    font-size: 4rem;
+    font-size: 3rem;
     text-align: center;
 }
 
@@ -29,7 +29,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
 }
 
 .main-content > h1 {
@@ -37,6 +37,7 @@
     background-color: #14256a;
     color: white;
     padding: 5px 35px;
+    font-size: 30px;
 }
 
 .auth-options {
@@ -44,7 +45,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
 }
 

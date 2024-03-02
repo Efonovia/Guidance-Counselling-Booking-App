@@ -77,8 +77,8 @@ function StudentSignUp() {
                         <div className="col-12">
                             <div className="dashboard_header mb_50">
                                 <div className="row">
-                                    <div className="col-lg-6">
-                                        <div style={{width: "100%", marginLeft: "50%"}} className="dashboard_header_title">
+                                    <div style={{margin: "10px auto"}} className="col-lg-6">
+                                        <div className="dashboard_header_title">
                                             <h3 style={{textAlign: "center"}}>SignUp as a Student</h3>
                                         </div>
                                     </div>

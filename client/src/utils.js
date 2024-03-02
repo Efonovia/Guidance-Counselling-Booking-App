@@ -43,16 +43,12 @@ export function formatTime(dateString) {
 export function formDataToJson(formData) {
     const jsonObject = {};
     formData.forEach((value, key) => {
-        // Check if the key already exists in the JSON object
         if (jsonObject.hasOwnProperty(key)) {
-            // If the key already exists, convert the value to an array
-            // This is necessary to handle multiple values for the same key
             if (!Array.isArray(jsonObject[key])) {
                 jsonObject[key] = [jsonObject[key]];
             }
             jsonObject[key].push(value);
         } else {
-            // If the key doesn't exist, simply assign the value
             jsonObject[key] = value;
         }
     });

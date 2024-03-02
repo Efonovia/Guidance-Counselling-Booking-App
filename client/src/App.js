@@ -32,6 +32,7 @@ function App() {
               <Route path="/admin/viewcounselors" element={<Navbar><ViewAllCounselors /></Navbar>} />
               <Route path="/admin/messages" element={<Navbar><ViewAllCounselors /></Navbar>} />
               <Route path="/admin/createcounselor" element={<Navbar><CreateCounselor /></Navbar>} />
+              <Route path="/admin/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />
             </Routes>
           </BrowserRouter>
 }

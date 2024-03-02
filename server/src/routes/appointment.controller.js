@@ -62,3 +62,24 @@ export const editAppointment = async(req, res) => {
         return res.status(500).json({ok: false, error: "Error updating :" + field + error.message})
     }
 }
+
+export const getCurrentAppointment = async (req, res) => {
+    const { studentSchoolId } = req.params;
+
+    try {
+        const appointment = await AppointmentDatabase.findOne({
+            studentSchoolId,
+            completed: false,
+            approved: true
+        });
+
+        if (!appointment) {
+            return res.status(200).json({ ok: true, body: null });
+        }
+
+        res.status(200).json({ok: true, body: appointment});
+    } catch (error) {
+        console.error("Error finding appointment:", error);
+        res.status(500).json({ ok: false, error: "Internal server error" });
+    }
+}

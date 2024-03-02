@@ -3,7 +3,8 @@ import {
     createAppointment, 
     editAppointment, 
     getAllAppointments, 
-    getAppointment
+    getAppointment,
+    getCurrentAppointment
 } from "./appointment.controller.js"
 
 
@@ -11,6 +12,7 @@ const appointmentsRouter = express.Router()
 appointmentsRouter.get("/all", getAllAppointments)
 appointmentsRouter.get("/:id", getAppointment)
 appointmentsRouter.post("/create", createAppointment)
+appointmentsRouter.get("/getcurrent/:studentSchoolId", getCurrentAppointment)
 appointmentsRouter.post("/edit", editAppointment)
 
 

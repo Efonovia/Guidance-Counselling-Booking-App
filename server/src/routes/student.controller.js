@@ -22,6 +22,7 @@ export const getStudent = async (req, res) => {
 export const loginStudent = async(req, res) => {
   try {
     const { schoolId, password } = req.body
+    console.log(req.body)
     //Check if the student exists by using their schoolId
     const student = await StudentDatabase.findOne({ schoolId: schoolId })
     if(!student) {
@@ -30,10 +31,10 @@ export const loginStudent = async(req, res) => {
 
     //Check if password is correct
     const isPasswordValid = verifyPassword(password, student.passwordSalt, student.passwordHash)
-    if(!isPasswordValid) return res.status(400).json({ok: false, msg: "Invalid credentials" })
+    if(!isPasswordValid) return res.status(400).json({ok: false, msg: "Invalid password" })
 
     
-    return await res.status(200).json({ ok: true, student: student })
+    return await res.status(200).json({ ok: true, body: student })
   } catch (error) {
       return res.status(500).json({ error: error.message })
   }

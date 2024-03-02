@@ -1,8 +1,29 @@
 import React from 'react';
+import { httpGetCurrentAppointment } from '../requests.hooks';
+import { useSelector } from 'react-redux';
 
 
 function StudentAppointmentOverview() {
+    const userInfo = useSelector(state => state.user)
+    console.log(userInfo)
+    const [appointmentDetails, setAppointmentDetails] = React.useState(null)
+    const [loading, setLoading] = React.useState(true)
 
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await httpGetCurrentAppointment(userInfo.schoolId);
+                setAppointmentDetails(result);
+            } catch (error) {
+                console.error('Error fetching featured companies:', error);
+            } finally {
+                setLoading(false)
+            }
+        };
+
+        fetchData();
+        
+    }, [userInfo.schoolId])
 
     return <div className="messages_box_area">
                 <div className="messages_list">

@@ -1,6 +1,5 @@
 import express from "express"
 import { 
-    createNewStudent, 
     getAllStudents, 
     getStudent, 
     loginStudent 
