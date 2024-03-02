@@ -3,7 +3,7 @@ const API_URL = "http://localhost:8000"
 
 export const httpSignUpStudent = async (studentDetails) => {
     try {
-        const response = await fetch(`${API_URL}/signup`, {
+        const response = await fetch(`${API_URL}/students/signup`, {
             method: "POST",
             body: studentDetails
         })

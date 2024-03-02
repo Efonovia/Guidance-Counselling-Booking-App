@@ -22,24 +22,16 @@ function App() {
               <Route path="/counselor/login" element={<CounselorLogin />} />
               <Route path="/student/login" element={<StudentLogin />} />
               <Route path="/student/signup" element={<StudentSignUp />} />
-              <Route
-                element={
-                  <Navbar>
-                    <Routes>
-                      <Route path="/student/:id/bookappointment" element={<StudentBookAppointment />} />
-                      <Route path="/student/:id/appointmentoverview" element={<StudentAppointmentOverview />} />
-                      <Route path="/counselor/:id/createappointment" element={<CreateAppointment />} />
-                      <Route path="/counselor/:id/schedule" element={<MySchedule />} />
-                      <Route path="/counselor/:id/messages" element={<MessagesPage />} />
-                      <Route path="/counselor/:id/appointments" element={<ViewAppointments />} />
-                      <Route path="/counselor/:id/appointments/edit" element={<ViewAndEditAppointment />} />
-                      <Route path="/admin/:id/viewcounselors" element={<ViewAllCounselors />} />
-                      <Route path="/admin/:id/messages" element={<ViewAllCounselors />} />
-                      <Route path="/admin/:id/createcounselor" element={<CreateCounselor />} />
-                    </Routes>
-                  </Navbar>
-                }
-              />
+              <Route path="/student/bookappointment" element={<Navbar><StudentBookAppointment /></Navbar>} />
+              <Route path="/student/appointmentoverview" element={<Navbar><StudentAppointmentOverview /></Navbar>} />
+              <Route path="/counselor/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />
+              <Route path="/counselor/schedule" element={<Navbar><MySchedule /></Navbar>} />
+              <Route path="/counselor/messages" element={<Navbar><MessagesPage /></Navbar>} />
+              <Route path="/counselor/appointments" element={<Navbar><ViewAppointments /></Navbar>} />
+              <Route path="/counselor/appointments/edit" element={<Navbar><ViewAndEditAppointment /></Navbar>} />
+              <Route path="/admin/viewcounselors" element={<Navbar><ViewAllCounselors /></Navbar>} />
+              <Route path="/admin/messages" element={<Navbar><ViewAllCounselors /></Navbar>} />
+              <Route path="/admin/createcounselor" element={<Navbar><CreateCounselor /></Navbar>} />
             </Routes>
           </BrowserRouter>
 }

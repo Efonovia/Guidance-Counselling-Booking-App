@@ -14,7 +14,7 @@ function Navbar({ children }) {
     const [showSideBar, setShowSideBar] = React.useState(false)
 
     return <> 
-                <nav className={`sidebar vertical-scroll ps-container ps-theme-default ps-active-y${showSideBar && " active_sidebar"}`}>
+                <nav className={`sidebar vertical-scroll ps-container ps-theme-default ps-active-y${showSideBar ? " active_sidebar": ""}`}>
                     <div className="logo d-flex justify-content-between">
                         <a href><img src={logo} alt="alt" /></a>
                         <div onClick={() => setShowSideBar(false)} className="sidebar_close_icon d-lg-none">

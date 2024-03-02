@@ -2457,7 +2457,7 @@ table.dataTable.dtr-inline.collapsed
 		justify-content: flex-end !important;
 	}
 }
-@media only screen and (min-width: 576px) and (max-width: 767px) {
+@media only screen and (min-width: 576px) and (max-width: 991px) {
 	.header_iner {
 		justify-content: flex-end !important;
 	}

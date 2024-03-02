@@ -55,7 +55,7 @@ function StudentSignUp() {
             const response = await httpSignUpStudent(formData)
             if(response.ok) {
                 dispatch(setUser({ user: { type: "student", ...response.body } }))
-                navigate(`/student/${response.body.schoolId}/bookappointment`)
+                navigate("/student/bookappointment")
             }
 
             console.log(response)
@@ -97,19 +97,19 @@ function StudentSignUp() {
                                             <div className="modal-body">
                                             <form style={{height: "50vh", overflowY: "auto"}}>
                                                 <div>
-                                                    <input value={formDetails.firstName} onChange={handleChange} type="text" className="form-control" placeholder="First Name" />
+                                                    <input name='firstName' value={formDetails.firstName} onChange={handleChange} type="text" className="form-control" placeholder="First Name" />
                                                 </div>
                                                 <div>
-                                                    <input value={formDetails.lastName} onChange={handleChange} type="text" className="form-control" placeholder="Last Name" />
+                                                    <input name='lastName' value={formDetails.lastName} onChange={handleChange} type="text" className="form-control" placeholder="Last Name" />
                                                 </div>
                                                 <div>
-                                                    <input value={formDetails.schoolId} onChange={handleChange} type="text" className="form-control" placeholder="Enter your School Student ID" />
+                                                    <input name='schoolId' value={formDetails.schoolId} onChange={handleChange} type="text" className="form-control" placeholder="Enter your School Student ID" />
                                                 </div>
                                                 <div>
-                                                    <input value={formDetails.email} onChange={handleChange} type="text" className="form-control" placeholder="Enter your email" />
+                                                    <input name="email" value={formDetails.email} onChange={handleChange} type="text" className="form-control" placeholder="Enter your email" />
                                                 </div>
                                                 <div>
-                                                    <input value={formDetails.telephone} onChange={handleChange} type="text" className="form-control" placeholder="Phone Number" />
+                                                    <input name="telephone" value={formDetails.telephone} onChange={handleChange} type="text" className="form-control" placeholder="Phone Number" />
                                                 </div>
                                                 <div style={{width: "100%"}} className="col-md-12">
                                                     <div style={{border: "1px dashed #2d1967", height: "50px"}} className="input-group">
@@ -121,17 +121,17 @@ function StudentSignUp() {
                                                                     accept="image/*"
                                                                     onChange={handleChange}
                                                                     style={{display: "none"}}
-                                                                    name="cv"
+                                                                    name="picturePath"
                                                                     className="custom-file-input"
                                                                     id="inputGroupFile03"
-                                                                    aria-describedby="inputGroupFileAddon03"/><br></br>
+                                                                    aria-describedby="inputGroupFileAddon03"/><br></br><br></br>
                                                                     <span style={{marginTop: "-50px", color: "black"}} id="fileName">{formDetails["picturePath"]?.name}</span>
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div style={{marginTop: "20px"}}>
-                                                    <input value={formDetails.password} onChange={handleChange} type="password" className="form-control" placeholder="Password" />
+                                                    <input name="password" value={formDetails.password} onChange={handleChange} type="password" className="form-control" placeholder="Password" />
                                                 </div>
                                                 <a onClick={submitForm} href className="btn_1 full_width text-center">Sign up</a>
                                             </form>

@@ -44,6 +44,7 @@
 .my-carousel-inner > img {
     width: 100%;
     height: 90%;
+    min-width: 250px;
 }
 
 .my-carousel-inner > h3 {
