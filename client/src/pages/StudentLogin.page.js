@@ -59,7 +59,7 @@ function StudentLogin() {
     return loading ? <div style={{position: "absolute", marginTop: "300px", marginLeft: "20vw", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                         <h1 style={{textAlign: "center"}}>Signing you in. Hold on...</h1>
                         <br></br>
-                        <CircularProgress sx={{color: "#fb246a"}} size={100} />
+                        <CircularProgress sx={{color: "blue"}} size={100} />
                     </div>: <div style={{width: "100vw", height: "100vh", backgroundImage: "url(http://localhost:3000/static/media/home-bg.5bd74799b014ef072512.png)"}} className="main_content_iner ">
                 <div className="container-fluid p-0">
                     <div className="row justify-content-center">

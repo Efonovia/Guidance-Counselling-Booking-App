@@ -16,7 +16,7 @@ const MessageSchema = mongoose.Schema({
     appointmentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'appointments',
-        required: true
+        default: null
     },
     seen: {
         type: Boolean,

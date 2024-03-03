@@ -9,7 +9,7 @@ import {
 
 
 const appointmentsRouter = express.Router()
-appointmentsRouter.get("/all", getAllAppointments)
+appointmentsRouter.get("/all/:counselorId", getAllAppointments)
 appointmentsRouter.get("/:id", getAppointment)
 appointmentsRouter.post("/create", createAppointment)
 appointmentsRouter.get("/getcurrent/:studentSchoolId", getCurrentAppointment)

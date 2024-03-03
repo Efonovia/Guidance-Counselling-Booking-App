@@ -76,6 +76,26 @@ export const viewMessage = async(req, res) => {
         return res.status(201).json({ok: true})
     } catch (error) {
         console.error("Error viewing message:", error.message);
-        return res.status(500).json({ok: false, error: "Error viewing message :" + error.message})
+        return res.status(500).json({ok: false, error: "Error viewing message"})
     }
 }
+
+
+const findMessagesBetweenCounselors = async (req, res) => {
+    try {
+        const { counselorId1, counselorId2 } = req.params;
+        const messages = await MessageDatabase.find({
+            $or: [
+                { 'sender.userId': counselorId1, 'receiver.userId': counselorId2 },
+                { 'sender.userId': counselorId2, 'receiver.userId': counselorId1 }
+            ]
+        });
+
+        res.status(200).json({ok: true, body: messages});
+    } catch (error) {
+        console.error('Error finding messages between counselors:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export { findMessagesBetweenCounselors };

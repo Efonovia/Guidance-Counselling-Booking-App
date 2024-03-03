@@ -1,5 +1,8 @@
 import CounselorDatabase from "../models/counselor.model.js"
 import { hashPassword, verifyPassword } from "../utilities/encryption.utilities.js"
+import path from "path"
+import { getDirname } from '../utilities/common.utilities.js';
+
 
 export const getAllCounselors = async (req, res) => {
     try {
@@ -33,7 +36,7 @@ export const loginCounselor = async(req, res) => {
     if(!isPasswordValid) return res.status(400).json({ok: false, msg: "Invalid credentials" })
 
     
-    return await res.status(200).json({ ok: true, counselor: counselor })
+    return await res.status(200).json({ ok: true, body: counselor })
   } catch (error) {
       return res.status(500).json({ error: error.message })
   }
@@ -90,5 +93,34 @@ export const createNewCounselor = async (req, res) => {
 
   } catch (error) {
     return res.status(500).json({error: error.message})
+  }
+}
+
+
+export const deleteCounselor = async (req, res) => {
+    const { counselorId } = req.params;
+
+    try {
+        const counselor = await CounselorDatabase.findById(counselorId);
+
+        if (!counselor) {
+            return res.status(404).json({ ok: false, message: "Counselor not found" });
+        }
+
+        await counselor.deleteOne();
+        return res.status(200).json({ok: true, message: "Counselor deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting counselor:", error);
+       return res.status(500).json({ error: true, message: "Internal server error" });
+    }
+};
+
+
+export const getCounselorPicture = async (req, res) => {
+  try {
+      const { picturePath } = req.params
+      return res.sendFile(path.join(getDirname(), "../uploads", picturePath))
+  } catch (error) {
+      return res.status(404).json({error: error.message})
   }
 }

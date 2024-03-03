@@ -29,6 +29,7 @@ function App() {
               <Route path="/counselor/messages" element={<Navbar><MessagesPage /></Navbar>} />
               <Route path="/counselor/appointments" element={<Navbar><ViewAppointments /></Navbar>} />
               <Route path="/counselor/appointments/edit" element={<Navbar><ViewAndEditAppointment /></Navbar>} />
+              <Route path="/admin/schedule" element={<Navbar><MySchedule /></Navbar>} />
               <Route path="/admin/viewcounselors" element={<Navbar><ViewAllCounselors /></Navbar>} />
               <Route path="/admin/messages" element={<Navbar><ViewAllCounselors /></Navbar>} />
               <Route path="/admin/createcounselor" element={<Navbar><CreateCounselor /></Navbar>} />

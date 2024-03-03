@@ -28,6 +28,14 @@ function Navbar({ children }) {
                         </div>
                     </div>
                     {userInfo.type === "admin" && <ul id="sidebar_menu">
+                        <li onClick={()=>navigate("/admin/schedule")} style={{ cursor: "pointer" }}>
+                            <a className="has-arrow" href aria-expanded="false">
+                                <div className="icon_menu">
+                                    <CalendarMonthIcon />
+                                </div>
+                                <span style={{ color: location.pathname === "/counselor/schedule" && "blue" }}>My Schedule</span>
+                            </a>
+                        </li>
                         <li onClick={()=>navigate("/admin/viewcounselors")} style={{ cursor: "pointer" }}>
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">

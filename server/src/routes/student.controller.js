@@ -1,5 +1,8 @@
 import StudentDatabase from "../models/student.model.js"
 import { hashPassword, verifyPassword } from "../utilities/encryption.utilities.js"
+import path from "path"
+import { getDirname } from '../utilities/common.utilities.js';
+
 
 export const getAllStudents = async (req, res) => {
     try {
@@ -95,5 +98,15 @@ export const createNewStudent = async (req, res) => {
 
   } catch (error) {
     return res.status(500).json({ok: false, error: error.message})
+  }
+}
+
+
+export const getStudentPicture = async (req, res) => {
+  try {
+      const { picturePath } = req.params
+      return res.sendFile(path.join(getDirname(), "../uploads", picturePath))
+  } catch (error) {
+      return res.status(404).json({error: error.message})
   }
 }

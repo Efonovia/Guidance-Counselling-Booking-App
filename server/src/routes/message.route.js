@@ -1,6 +1,7 @@
 import express from "express"
 import { 
     deleteMessage,
+    findMessagesBetweenCounselors,
     getAllMessages, 
     getMessage, 
     getMessagesByAppointment, 
@@ -12,6 +13,7 @@ import {
 const messagesRouter = express.Router()
 messagesRouter.get("/all", getAllMessages)
 messagesRouter.get("/:id", getMessage)
+messagesRouter.get("/betweencounselors/:counselorId1/:counselorId2", findMessagesBetweenCounselors)
 messagesRouter.get("/appointment/:id", getMessagesByAppointment)
 messagesRouter.post("/send", sendMessage)
 messagesRouter.post("/view/:id", viewMessage)

@@ -1,9 +1,36 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import { useSelector } from 'react-redux';
 
 
 function ViewAppointments() {
+    const userInfo = useSelector(state => state.user)
+    function getStatus({completed, cancelled, approved}) {
+        if(completed) {
+            return "completed"
+        } else if(cancelled) {
+            return "cancelled"
+        } else if(approved && !completed) {
+            return "active"
+        } else if(!approved && !cancelled) {
+            return "pending"
+        }
+    }
 
+    function getStatusColor(status) {
+        switch(status) {
+            case "active":
+                return {background: "blue"}
+            case "completed":
+                return {background: "green"}
+            case "cancelled":
+                return {background: "red"}
+            case "pending":
+                return {background: "black", color: "white"}
+            default:
+                return
+        }
+    }
 
     return <div class="white_card card_height_100 mb_30">
     <div class="white_card_header">

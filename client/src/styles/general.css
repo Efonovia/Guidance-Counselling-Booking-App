@@ -11,3 +11,47 @@
     align-items: center;
     flex-direction: column;
 }
+
+#student_before::before {
+    background: #6ef84c;
+}
+
+#counselor_before::before {
+    background: #4c6ef8;
+}
+
+#admin_before::before {
+    background: black;
+}
+
+#student_bg {
+    background: #6ef84c;
+}
+
+#counselor_bg {
+    background: #4c6ef8;
+}
+
+#admin_bg {
+    background: black;
+}
+
+#student_color {
+    color: #6ef84c;
+}
+
+#counselor_color {
+    color: #4c6ef8;
+}
+
+#admin_color {
+    color: black;
+}
+
+.custom-postnavbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}

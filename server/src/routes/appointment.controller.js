@@ -1,9 +1,15 @@
 import AppointmentDatabase from "../models/appointment.model.js";
+import CounselorDatabase from "../models/counselor.model.js";
 
 
 export const getAllAppointments = async (req, res) => {
+    const { counselorId } = req.params
+    let filter = {}
+    if(counselorId) {
+        filter = { counselorId }
+    }
     try {
-        return res.status(200).json(await AppointmentDatabase.find({}, { '_id': 0, '__v': 0 }))
+        return res.status(200).json({ok: true, body: await AppointmentDatabase.find(filter, { '_id': 0, '__v': 0 })})
     } catch (error) {
         return res.status(404).json({error: error.message})
     }
@@ -13,7 +19,13 @@ export const getAppointment = async (req, res) => {
     try {
         const { id } = req.params
         const appointment = await AppointmentDatabase.findById(id)
-        return res.status(200).json(appointment)
+        if (!appointment) {
+            return res.status(200).json({ ok: true, body: null });
+        }
+        const counselor = await CounselorDatabase.findById(appointment._id)
+        
+        return res.status(200).json({ok: true, body: { ...appointment, counselorName: counselor.firstName + " " + counselor.lastName}});
+
     } catch (error) {
         return res.status(404).json({error: error.message})
     }
@@ -25,7 +37,7 @@ export const createAppointment = async(req, res) => {
         const newAppointment = new AppointmentDatabase({
             studentSchoolId,
             counselorId,
-            appointmentDate: appointmentDate || new Date(2024, 3, 11, 12),
+            appointmentDate: appointmentDate,
             dateCreated: new Date(),
             approved: false,
             completed: false,
@@ -45,17 +57,21 @@ export const createAppointment = async(req, res) => {
 
 export const editAppointment = async(req, res) => {
     try {
-        const { appointmentId, field, value } = req.body
+        const { appointmentId, updates } = req.body
         const appointment = await AppointmentDatabase.findById(appointmentId);
         
         if (!appointment) {
             console.log("Appointment not found");
             return res.status(404).json({ok: false, error: "Appointment not found"})
         }
-        appointment[field] = value;
-        await appointment.save();
+
+        updates.forEach(({ field, value }) => {
+            appointment[field] = value;
+        })
+        await appointment.save()
+
         const updatedAppointment = await AppointmentDatabase.findById(appointmentId);
-        console.log(field + "field updated successfully")
+        console.log("fields updated successfully")
         return res.status(201).json({ok: true, body: updatedAppointment})
     } catch (error) {
         console.error("Error updating" + field +":", error.message);
@@ -70,16 +86,18 @@ export const getCurrentAppointment = async (req, res) => {
         const appointment = await AppointmentDatabase.findOne({
             studentSchoolId,
             completed: false,
-            approved: true
+            cancelled: false
         });
 
+        
         if (!appointment) {
             return res.status(200).json({ ok: true, body: null });
         }
-
-        res.status(200).json({ok: true, body: appointment});
+        const counselor = await CounselorDatabase.findById(appointment._id)
+        
+        return res.status(200).json({ok: true, body: { ...appointment, counselorName: counselor.firstName + " " + counselor.lastName}});
     } catch (error) {
         console.error("Error finding appointment:", error);
-        res.status(500).json({ ok: false, error: "Internal server error" });
+        return res.status(500).json({ ok: false, error: "Internal server error" });
     }
 }

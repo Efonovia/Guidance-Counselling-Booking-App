@@ -30,27 +30,26 @@ function PostNavbar({ children, openSideBar }) {
 		navigate("/")
 	}
 
-    return <section style={{paddingBottom: 0}} className="main_content dashboard_part large_header_bg">
+    return <section style={{paddingBottom: 0}} id={`${userInfo.type}_before`} className="main_content dashboard_part large_header_bg">
 			<div className="container-fluid g-0">
 				<div className="row">
 					<div className="col-lg-12 p-0">
 						<div style={getStyles()} className="header_iner d-flex justify-content-between align-items-center">
-							<div className="header_right d-flex justify-content-between align-items-center">
-								<div style={{width: "1px", marginLeft: "250px"}} className="cen-col">
+							<div className="custom-postnavbar">
+								<div style={{width: "10%", cursor: "pointer"}} className='sidebar_icon d-lg-none' onClick={openSideBar}>
+									<MenuIcon sx={{color: userInfo.type === "admin" ? "white" : "black"}} />
+								</div>
+								<h2 style={{textAlign: 'center', color: userInfo.type === "admin" ? "white" : "black"}}>{capitalizeWords((userInfo.type))} Dashboard</h2>
+								<div className="cen-col">
 									<div className='cen-row'>
-										<div className='sidebar_icon d-lg-none' onClick={openSideBar}>
-											<MenuIcon />
-										</div>
 										<div className="profile_info">
 											<img src={profilePhoto} alt="alt" />
 										</div>
 
 										<button onClick={logout}>logout</button>
 									</div>
-									<div>{userInfo.firstName} {userInfo.lastName}</div>
+									<div style={{color: userInfo.type === "admin" ? "white" : "black"}}>{userInfo.firstName} {userInfo.lastName}</div>
 								</div>
-
-								<h2 style={{textAlign: 'center', paddingLeft: "100px"}}>{capitalizeWords((userInfo.type))} Dashboard</h2>
 							</div>
 						</div>
 					</div>
