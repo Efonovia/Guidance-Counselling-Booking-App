@@ -3,7 +3,7 @@ import MessageDatabase from "../models/message.model.js"
 
 export const getAllMessages = async (req, res) => {
     try {
-        return res.status(200).json(await MessageDatabase.find({}, { '_id': 0, '__v': 0 }))
+        return res.status(200).json(await MessageDatabase.find({}, { '__v': 0 }))
     } catch (error) {
         return res.status(404).json({error: error.message})
     }

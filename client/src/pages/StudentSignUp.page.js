@@ -113,9 +113,9 @@ function StudentSignUp() {
                                                 </div>
                                                 <div style={{width: "100%"}} className="col-md-12">
                                                     <div style={{border: "1px dashed #2d1967", height: "50px"}} className="input-group">
-                                                        <div className="custom-file">
-                                                            <label style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "1px"}} className="custom-file-label" htmlFor="inputGroupFile03">
-                                                                <span style={{marginTop: "10px"}}> &nbsp;&nbsp;<CloudUploadIcon />&nbsp;Upload a photo of yourself</span>
+                                                        <div style={{width: '100%'}} className="custom-file">
+                                                            <label style={{display: "flex", width: '100%', height: '100%', flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "1px"}} className="custom-file-label" htmlFor="inputGroupFile03">
+                                                                <span style={{marginTop: "10px", width: '100%', height: '100%'}}> &nbsp;&nbsp;<CloudUploadIcon />&nbsp;Upload a photo of yourself</span>
                                                                 <input
                                                                     type="file"
                                                                     accept="image/*"

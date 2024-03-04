@@ -26,6 +26,31 @@ export const httpSignUpStudent = async (studentDetails) => {
     }
 }
 
+export const httpCreateCounselor = async (counselorDetails) => {
+    try {
+        const response = await fetch(`${API_URL}/counselors/signup`, {
+            method: "POST",
+            body: counselorDetails
+        })
+        if (response.error) {
+            throw new Error('Failed to sign you up. try again');
+        }
+        const result = await response.json()
+        if(!result.exists) {
+            return result;
+        } else {
+            if(result.exists) {
+                alert("that counselor already exists")
+            } else if(result.error) {
+                throw new Error("server error try again")
+            }
+        }
+    } catch (error) {
+        console.log(error)
+        alert("server error. try again")
+    }
+}
+
 
 export const httpLoginStudent = async (studentDetails) => {
     try {
@@ -101,7 +126,7 @@ export const httpBookAppointment = async (appointmentDetails) => {
         })
         const result = await response.json()
         if(result?.ok) {
-            return result.body;
+            return result;
         } else {
             throw new Error('Failed to book appointment. try again');
         }
@@ -210,7 +235,7 @@ export const httpEditAppointment = async (updateDetails) => {
         })
         const result = await response.json()
         if(result?.ok) {
-            return result.body;
+            return result;
         } else {
             throw new Error('Failed to edit appointment. try again');
         }
@@ -224,7 +249,50 @@ export const httpGetAppointment = async (appointmentId) => {
     try {
         const response = await fetch(`${API_URL}/appointments/${appointmentId}`)
         if (response.error) {
-            throw new Error('Failed to fetch data. try again');
+            throw new Error('Failed to fetch appointment. try again');
+        }
+        const result = await response.json()
+        return result;
+    } catch (error) {
+        console.log(error)
+        alert(error)
+    }
+}
+
+
+export const httpGetAllCounselors = async () => {
+    try {
+        const response = await fetch(`${API_URL}/counselors/all`)
+        if (response.error) {
+            throw new Error('Failed to fetch appointments. try again');
+        }
+        const result = await response.json()
+        return result;
+    } catch (error) {
+        console.log(error)
+        alert(error)
+    }
+}
+
+export const httpGetStudent = async (studentId) => {
+    try {
+        const response = await fetch(`${API_URL}/students/${studentId}`)
+        if (response.error) {
+            throw new Error('Failed to fetch student info. try again');
+        }
+        const result = await response.json()
+        return result;
+    } catch (error) {
+        console.log(error)
+        alert(error)
+    }
+}
+
+export const httpGetCounselor = async (counselorId) => {
+    try {
+        const response = await fetch(`${API_URL}/counselors/${counselorId}`)
+        if (response.error) {
+            throw new Error('Failed to fetch counselor info. try again');
         }
         const result = await response.json()
         return result;

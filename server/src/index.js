@@ -11,6 +11,7 @@ import messagesRouter from "./routes/message.route.js";
 import appointmentsRouter from "./routes/appointment.route.js";
 import { createNewStudent } from "./routes/student.controller.js";
 import multer from "multer";
+import { createNewCounselor } from "./routes/counselor.controller.js";
 
 
 // CONFIGURATION
@@ -48,6 +49,7 @@ app.use("/counselors", counselorsRouter)
 app.use("/messages", messagesRouter)
 app.use("/appointments", appointmentsRouter)
 app.post("/students/signup", upload.single("picturePath"), createNewStudent)
+app.post("/counselors/signup", upload.single("picturePath"), createNewCounselor)
 
 
 

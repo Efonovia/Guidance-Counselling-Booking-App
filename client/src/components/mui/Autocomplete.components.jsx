@@ -15,7 +15,8 @@ export default function ComboBox(props) {
         }
        }
       value={props.value || null}
-      onChange={(event, value) => props.onStateChange(value)}
+      onChange={(event, value) => props.handleChange(value)}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       renderInput={(params) => <TextField {...params} label={props.label} />}
       renderOption={(props, option) => (
         <li {...props}>

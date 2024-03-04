@@ -1,3 +1,5 @@
+export const centerStyle = {display: "flex", justifyContent: "center", alignItems: "center"}
+
 export function shortenText(len, text) {
     return text.length <= len ? text : text.slice(0, len-3)+"..."  
 }
@@ -6,7 +8,7 @@ export function checkFormFields(formData) {
     const emptyFields = [];
 
     for (const field in formData) {
-        if (!formData[field]) {
+        if (!formData[field] && field !== "isAdmin") {
             emptyFields.push(field);
         }
     }
@@ -55,19 +57,51 @@ export function formDataToJson(formData) {
     return jsonObject;
 }
 
-export function getOrdinalSuffix(number) {
-    if (number % 100 >= 11 && number % 100 <= 13) {
-        return `${number}th`;
+export function dateTimeStringToDate(dateString, timeString) {
+    const [year, month, day] = dateString.split('-')
+    const [hours, minutes] = timeString.split(':')
+
+    const appointmentDate = new Date(year, month - 1, day, hours, minutes)
+    return appointmentDate
+}
+
+export function getStatus({completed, cancelled, approved}) {
+    if(completed) {
+        return "completed"
+    } else if(cancelled) {
+        return "cancelled"
+    } else if(approved && !completed) {
+        return "active"
+    } else if(!approved && !cancelled) {
+        return "pending"
     }
-  
-    switch (number % 10) {
-        case 1:
-            return `${number}st`;
-        case 2:
-            return `${number}nd`;
-        case 3:
-            return `${number}rd`;
+}
+
+export function getStatusColor(status) {
+    switch(status) {
+        case "active":
+            return {background: "blue", color: "white"}
+        case "completed":
+            return {background: "green", color: "white"}
+        case "cancelled":
+            return {background: "red", color: "white"}
+        case "pending":
+            return {background: "black", color: "white"}
         default:
-            return `${number}th`;
+            return
     }
-  }
+}
+
+export function getDateAndTimeObject(dateInput) {
+    const date = new Date(dateInput)
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const appointmentDate = `${year}-${month}-${day}`;
+    const appointmentTime = `${hours}:${minutes}`;
+
+    return { appointmentDate, appointmentTime };
+}

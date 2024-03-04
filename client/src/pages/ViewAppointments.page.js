@@ -32,6 +32,8 @@ function ViewAppointments() {
         }
     }
 
+    
+
     return <div class="white_card card_height_100 mb_30">
     <div class="white_card_header">
         <div class="box_header m-0">

@@ -40,7 +40,7 @@ function StudentAppointmentOverview() {
                 const result = await httpGetCurrentAppointment(userInfo.schoolId);
                 setAppointmentDetails(result);
             } catch (error) {
-                console.error('Error fetching featured companies:', error);
+                console.error('Error fetching appointment:', error);
             } finally {
                 setLoading(false)
             }

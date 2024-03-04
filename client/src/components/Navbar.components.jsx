@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import EventSeatIcon from '@mui/icons-material/EventSeat';
 import MessageIcon from '@mui/icons-material/Message';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
@@ -36,12 +37,20 @@ function Navbar({ children }) {
                                 <span style={{ color: location.pathname === "/counselor/schedule" && "blue" }}>My Schedule</span>
                             </a>
                         </li>
-                        <li onClick={()=>navigate("/admin/viewcounselors")} style={{ cursor: "pointer" }}>
+                        <li onClick={()=>navigate("/admin/viewallappointments")} style={{ cursor: "pointer" }}>
+                            <a className="has-arrow" href aria-expanded="false">
+                                <div className="icon_menu">
+                                    <EventSeatIcon />
+                                </div>
+                                <span style={{ color: location.pathname === "/admin/viewallappointments" && "black" }}>All Appointments</span>
+                            </a>
+                        </li>
+                        <li onClick={()=>navigate("/admin/viewallcounselors")} style={{ cursor: "pointer" }}>
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <PeopleIcon />
                                 </div>
-                                <span style={{ color: location.pathname === "/admin/viewcounselors" && "black" }}>All Counsellors</span>
+                                <span style={{ color: location.pathname === "/admin/viewallcounselors" && "black" }}>All Counselors</span>
                             </a>
                         </li>
                         <li onClick={()=>navigate("/admin/createappointment")} style={{ cursor: "pointer" }}>

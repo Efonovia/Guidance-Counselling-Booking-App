@@ -6,7 +6,7 @@ import { getDirname } from '../utilities/common.utilities.js';
 
 export const getAllStudents = async (req, res) => {
     try {
-        return res.status(200).json(await StudentDatabase.find({}, { '_id': 0, '__v': 0 }))
+        return res.status(200).json(await StudentDatabase.find({}, { '__v': 0 }))
     } catch (error) {
         return res.status(404).json({error: error.message})
     }
@@ -100,7 +100,6 @@ export const createNewStudent = async (req, res) => {
     return res.status(500).json({ok: false, error: error.message})
   }
 }
-
 
 export const getStudentPicture = async (req, res) => {
   try {

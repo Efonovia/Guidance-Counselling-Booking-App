@@ -6,7 +6,7 @@ import { getDirname } from '../utilities/common.utilities.js';
 
 export const getAllCounselors = async (req, res) => {
     try {
-        return res.status(200).json(await CounselorDatabase.find({}, { '_id': 0, '__v': 0 }))
+        return res.status(200).json(await CounselorDatabase.find({}, { '__v': 0 }))
     } catch (error) {
         return res.status(404).json({error: error.message})
     }
@@ -65,6 +65,10 @@ export const createNewCounselor = async (req, res) => {
         return res.status(200).json({exists: true, body: counselor})
       } else {
           console.log(`Counselor with email ${email} not found.`);
+          let picturePath = "";
+          if (req.file) {
+              picturePath = req.file.filename;
+          }
 
           const newCounselor = new CounselorDatabase({
             firstName,
@@ -73,7 +77,7 @@ export const createNewCounselor = async (req, res) => {
             passwordHash: hash,
             passwordSalt: salt,
             telephone,
-            picturePath: picturePath || "",
+            picturePath: picturePath,
             isAdmin
           })
 
@@ -119,7 +123,7 @@ export const deleteCounselor = async (req, res) => {
 export const getCounselorPicture = async (req, res) => {
   try {
       const { picturePath } = req.params
-      return res.sendFile(path.join(getDirname(), "../uploads", picturePath))
+      return res.sendFile(path.join(getDirname(), "../../uploads", picturePath))
   } catch (error) {
       return res.status(404).json({error: error.message})
   }
