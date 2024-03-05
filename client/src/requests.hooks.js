@@ -125,6 +125,9 @@ export const httpBookAppointment = async (appointmentDetails) => {
             body: JSON.stringify(appointmentDetails)
         })
         const result = await response.json()
+        if(result.exists) {
+            throw new Error('Student already has an active appointment');
+        }
         if(result?.ok) {
             return result;
         } else {

@@ -1,13 +1,15 @@
 import React from 'react';
-import { httpGetCurrentAppointment } from '../requests.hooks';
+import { httpGetCurrentAppointment, httpGetMessagesByAppointment } from '../requests.hooks';
 import { useSelector } from 'react-redux';
+import { formatDate, formatTime, getStatus, getStatusColor, centerStyle } from '../utils';
+import { CircularProgress } from '@mui/material';
 
 
 function StudentAppointmentOverview() {
     const userInfo = useSelector(state => state.user)
-    console.log(userInfo)
     const [appointmentDetails, setAppointmentDetails] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
+    const [messages, setMessages] = React.useState([])
 
     function getStyles() {
 		switch(userInfo.type) {
@@ -39,29 +41,37 @@ function StudentAppointmentOverview() {
             try {
                 const result = await httpGetCurrentAppointment(userInfo.schoolId);
                 setAppointmentDetails(result);
+
+                const messagesResult = await httpGetMessagesByAppointment(result._id)
+                setMessages(messagesResult)
             } catch (error) {
                 console.error('Error fetching appointment:', error);
             } finally {
                 setLoading(false)
             }
-        };
-
+        }
         fetchData();
         
     }, [userInfo.schoolId])
 
-    return <div className="messages_box_area">
+    // const messagesHTML = messages.map(message => {
+    //     return 
+    // })
+
+    return loading ? <CircularProgress size={100} sx={{color: "black", margin: "150px 300px"}}/> : <div className="messages_box_area">
                 <div className="messages_list">
                     <div style={{height: "77vh", overflowY: "auto", alignItems: "start", gap: "10px"}} className="white_box cen-col">
-                        <h2 style={{paddingBottom: "20px", color: "black"}}>Appointment Details</h2>
                         {appointmentDetails ? <>
-                        <h3 id={`${userInfo.type}_color`} style={{paddingTop: "15px", fontSize: "24px"}}>Counselor:&nbsp;<span>Nasir Jones</span></h3>
-                        <h3 id={`${userInfo.type}_color`} style={{paddingTop: "15px", fontSize: "24px"}}>Date/Time of Appointment:&nbsp;<span>Nasir Jones</span></h3>
-                        <h3 id={`${userInfo.type}_color`} style={{paddingTop: "15px", fontSize: "24px"}}>Status:&nbsp;<span>Nasir Jones</span></h3>
-                        <h3 id={`${userInfo.type}_color`} style={{paddingTop: "15px", fontSize: "24px"}}>Date Created:&nbsp;<span>Nasir Jones</span></h3>
-                        <h3 id={`${userInfo.type}_color`} style={{paddingTop: "15px", fontSize: "24px"}}>Notes:&nbsp;<span>Nasir Jones</span></h3>
-                        <h3 id={`${userInfo.type}_color`} style={{paddingTop: "15px", fontSize: "24px"}}>Referrer:&nbsp;<span>Nasir Jones</span></h3>
-                        </> : <h2>You don't have any appointment at the moment</h2>}
+                        <h2 style={{color: "black", marginTop: "20px", fontSize: "22px", textDecoration: "underline"}}>Appointment Details</h2>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Student ID:&nbsp;<span>{appointmentDetails.studentSchoolId}</span></h3>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Counselor:&nbsp;<span>{appointmentDetails.counselorName}</span></h3>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px", ...centerStyle}}>Status:&nbsp;&nbsp;<span style={{...getStatusColor(getStatus(appointmentDetails)), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 10px"}}>{getStatus(appointmentDetails)}</span></h3>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentDetails.appointmentDate)} by {formatTime(appointmentDetails.appointmentDate)}</span></h3>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Is a Referral?:&nbsp;<span>{appointmentDetails.isReferral ? "Yes" : "No"}</span></h3>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Note:&nbsp;<span>{appointmentDetails.note}</span></h3>
+                        {appointmentDetails.isReferral && <><h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Name:&nbsp;<span>{appointmentDetails.referralInfo.name}</span></h3>
+                        <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Email:&nbsp;<span>{appointmentDetails.referralInfo.email}</span></h3></>}
+                        </> : <h2 style={{textAlign: "center", color: "black"}}>You don't have any appointment at the moment</h2>}
                     </div>
                 </div>
                 <div className="messages_chat mb_30">

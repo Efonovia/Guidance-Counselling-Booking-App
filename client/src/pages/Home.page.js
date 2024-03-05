@@ -18,6 +18,7 @@ function Home() {
                     <div className='auth-options'>
                         <div onClick={() => navigate("/student/login")} className='student'>Student</div>
                         <div onClick={() => navigate("/counselor/login")} className='counselor'>Counselor</div>
+                        <div onClick={() => navigate("/referral")} className='referrer'>Referrer</div>
                     </div>
                 </div>
             </main>

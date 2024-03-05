@@ -1,7 +1,7 @@
 import React from 'react';
 import { CircularProgress } from '@mui/material';
 import { httpEditAppointment, httpGetAllAppointments, httpGetAllCounselors, httpGetStudent } from '../requests.hooks';
-import { formatDate, formatTime, getStatus, getStatusColor, centerStyle } from '../utils';
+import { formatDate, formatTime, getStatus, getStatusColor, centerStyle, sortByStatus } from '../utils';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -47,7 +47,7 @@ function ViewAllAppointments() {
                     }
                 })
             )
-            setCurrentAppointments(formattedResponses)
+            setCurrentAppointments(sortByStatus(formattedResponses))
         } catch (error) {
             console.log(error)
         } finally {

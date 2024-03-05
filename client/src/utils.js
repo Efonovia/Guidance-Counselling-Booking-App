@@ -6,7 +6,7 @@ export function shortenText(len, text) {
 
 export function checkFormFields(formData) {
     const emptyFields = [];
-
+    console.log(formData)
     for (const field in formData) {
         if (!formData[field] && field !== "isAdmin") {
             emptyFields.push(field);
@@ -104,4 +104,13 @@ export function getDateAndTimeObject(dateInput) {
     const appointmentTime = `${hours}:${minutes}`;
 
     return { appointmentDate, appointmentTime };
+}
+
+export function sortByStatus(objectsList) {
+    const priorityList = ["pending", "active", "completed"];
+    const sortedObjects = objectsList.sort((a, b) => {
+        return priorityList.indexOf(getStatus(a)) - priorityList.indexOf(getStatus(b));
+    })
+
+    return sortedObjects
 }

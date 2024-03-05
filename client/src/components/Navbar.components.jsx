@@ -34,7 +34,7 @@ function Navbar({ children }) {
                                 <div className="icon_menu">
                                     <CalendarMonthIcon />
                                 </div>
-                                <span style={{ color: location.pathname === "/counselor/schedule" && "blue" }}>My Schedule</span>
+                                <span style={{ color: location.pathname === "/admin/schedule" && "black" }}>My Schedule</span>
                             </a>
                         </li>
                         <li onClick={()=>navigate("/admin/viewallappointments")} style={{ cursor: "pointer" }}>
@@ -109,7 +109,7 @@ function Navbar({ children }) {
                                 <div className="icon_menu">
                                     <HowToRegIcon />
                                 </div>
-                                <span style={{ color: location.pathname === "/counselor/appointments" && "blue" }}>Appointments</span>
+                                <span style={{ color: location.pathname === "/counselor/appointments" && "blue" }}>My Appointments</span>
                             </a>
                         </li>
                     </ul>}

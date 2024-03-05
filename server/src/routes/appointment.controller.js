@@ -13,6 +13,7 @@ export const getAllAppointments = async (req, res) => {
     try {
         return res.status(200).json({ok: true, body: await AppointmentDatabase.find({...filter, cancelled: false}, { '__v': 0 })})
     } catch (error) {
+        console.log(error)
         return res.status(404).json({error: error.message})
     }
 }
@@ -37,26 +38,35 @@ export const getAppointment = async (req, res) => {
 
 export const createAppointment = async(req, res) => {
     try {
-        const { studentSchoolId, counselorId, referralInfo, isReferral, note, appointmentDate } = req.body
+        const { studentSchoolId, counselorId, referralInfo, isReferral, note, appointmentDate, approved } = req.body
         console.log(req.body)
         let studentId = null
         const student = await StudentDatabase.findOne({ schoolId: studentSchoolId })
         if(student) {
             studentId = student._id
         }
+        const prevAppointment = await AppointmentDatabase.findOne({
+            studentSchoolId,
+            completed: false,
+            cancelled: false
+        });
+
+        if(prevAppointment) {
+            return res.status(500).json({ok: false, exists: true})
+        }
 
         const newAppointment = new AppointmentDatabase({
-            studentId: student._id,
+            studentId: studentId,
             studentSchoolId,
             counselorId,
             appointmentDate: appointmentDate,
             dateCreated: new Date(),
-            approved: false,
+            approved: approved || false,
             completed: false,
             cancelled: false,
             seen: false,
             isReferral: JSON.parse(isReferral),
-            referralInfo: JSON.parse(referralInfo) || null,
+            referralInfo: referralInfo || null,
             note: note || ""
         })
 
@@ -111,9 +121,9 @@ export const getCurrentAppointment = async (req, res) => {
         if (!appointment) {
             return res.status(200).json({ ok: true, body: null });
         }
-        const counselor = await CounselorDatabase.findById(appointment._id)
+        const counselor = await CounselorDatabase.findById(appointment.counselorId)
         
-        return res.status(200).json({ok: true, body: { ...appointment, counselorName: counselor.firstName + " " + counselor.lastName}});
+        return res.status(200).json({ok: true, body: { ...appointment._doc, counselorName: counselor.firstName + " " + counselor.lastName}});
     } catch (error) {
         console.error("Error finding appointment:", error);
         return res.status(500).json({ ok: false, error: "Internal server error" });

@@ -17,6 +17,10 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
         state.user = action.payload.user;
     },
+
+    setNotifications: (state, action) => {
+        state.notifications = action.payload.notifications;
+    },
   },
 });
 

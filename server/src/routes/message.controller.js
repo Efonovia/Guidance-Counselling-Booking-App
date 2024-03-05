@@ -55,7 +55,7 @@ export const getMessagesByAppointment = async (req, res) => {
         const { id } = req.params
         const messages = await MessageDatabase.find({ appointmentId: id })
         const unseenMessages = messages.filter(message => !message.seen).length
-        return res.status(201).json({ok: true, messages, unseenMessages})
+        return res.status(200).json({ok: true, body: messages, unseenMessages})
   } catch (error) {
         console.log(error)
         return res.status(404).json({ok: false, error: error.message})
@@ -91,7 +91,8 @@ const findMessagesBetweenCounselors = async (req, res) => {
             ]
         });
 
-        res.status(200).json({ok: true, body: messages});
+        const unseenMessages = messages.filter(message => !message.seen).length
+        return res.status(200).json({ok: true, body: messages, unseenMessages})
     } catch (error) {
         console.error('Error finding messages between counselors:', error);
         res.status(500).json({ error: 'Internal Server Error' });

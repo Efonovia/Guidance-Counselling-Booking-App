@@ -3,19 +3,19 @@ import ComboBox from '../components/mui/Autocomplete.components';
 import { CircularProgress } from '@mui/material';
 import { httpBookAppointment, httpGetAllCounselors } from '../requests.hooks';
 import { checkFormFields, dateTimeStringToDate, formDataToJson } from '../utils';
-import { useSelector } from 'react-redux';
 
 
-function CreateAppointment() {
-    const userInfo = useSelector(state => state.user)
+function ReferralAppointment() {
     const [loading, setLoading] = React.useState(false)
     const [listOfCounselors, setListOfCounselors] = React.useState([])
     const [formDetails, setFormDetails] = React.useState({
         studentSchoolId: "",
-        counselor: userInfo.type === "counselor" ? userInfo._id : "",
+        counselor:"",
         note: "",
         appointmentDate: "",
         appointmentTime: "",
+        referrerName: "",
+        referrerEmail: ""
     })
 
     function handleChange(event) {
@@ -43,16 +43,11 @@ function CreateAppointment() {
         try {
             const formData = new FormData();
             formData.append('studentSchoolId', formDetails.studentSchoolId);
-            if(userInfo.type === "admin") {
-                formData.append('counselorId', formDetails.counselor.id);
-            } else {
-                formData.append('counselorId', formDetails.counselor);
-                formData.append('approved', true);
-            }
+            formData.append('counselorId', formDetails.counselor.id);
             formData.append('appointmentDate', dateTimeStringToDate(formDetails.appointmentDate, formDetails.appointmentTime));
             formData.append('note', formDetails.note)
-            formData.append('isReferral', false);
-            formData.append('referralInfo', null);
+            formData.append('isReferral', true);
+            formData.append('referralInfo', {name: formDetails.referrerName, email: formDetails.referrerEmail});
             console.log(formDataToJson(formData))
             console.log("before", formDetails)
             const emptyFields = checkFormFields(formDetails);
@@ -76,10 +71,12 @@ function CreateAppointment() {
             setLoading(false)
             setFormDetails({
                 studentSchoolId: "",
-                counselor:  userInfo.type === "counselor" ? userInfo._id : "",
+                counselor:"",
                 note: "",
                 appointmentDate: "",
                 appointmentTime: "",
+                referrerName: "",
+                referrerEmail: ""
             })
         }
     }
@@ -107,24 +104,30 @@ function CreateAppointment() {
         
     }, [])
 
-    return loading ? <CircularProgress size={100} sx={{color: "black", margin: "140px 300px"}}/> : <div className="white_box mb_30">
+    return loading ? <CircularProgress size={100} sx={{color: "black", margin: "140px 300px"}}/> : <div style={{width: "100vw", height: "100vh", backgroundImage: "url(http://localhost:3000/static/media/home-bg.5bd74799b014ef072512.png)"}} className="white_box mb_30">
                 <div className="row justify-content-center">
                     <div className="col-lg-6">
                         <div className="modal-content cs_modal">
                             <div className="modal-header theme_bg_1 justify-content-center">
-                                <h5 className="modal-title text_white">Create a New Appointment</h5>
+                                <h5 style={{textAlign: "center"}} className="modal-title text_white">Refer a Student For an Appointment</h5>
                             </div>
                             <div className="modal-body">
-                                <form>
+                                <form style={{height: "50vh", overflowY: "auto"}}>
+                                    <div>
+                                        <input name="referrerName" value={formDetails.referrerName} onChange={handleChange} type="text" className="form-control" placeholder="Your Full Name" />
+                                    </div>
+                                    <div>
+                                        <input name="referrerEmail" value={formDetails.referrerEmail} onChange={handleChange} type="text" className="form-control" placeholder="Your Email" />
+                                    </div>
                                     <div>
                                         <input name="studentSchoolId" value={formDetails.studentSchoolId} onChange={handleChange} type="text" className="form-control" placeholder="Student's School ID" />
                                     </div>
-                                    {userInfo.type ==="admin" && <ComboBox 
+                                    <ComboBox 
                                         options={listOfCounselors} 
                                         label="Select Counselor"
                                         value={formDetails.counselor}
                                         handleChange={handleCounselorsChange}
-                                    />}
+                                    />
                                     <div>
                                         <input name="appointmentDate" value={formDetails.appointmentDate} onChange={handleChange} type="date" className="form-control" placeholder="Date of Appointment" />
                                     </div>
@@ -144,4 +147,4 @@ function CreateAppointment() {
 }
 
 
-export default CreateAppointment
+export default ReferralAppointment

@@ -1,159 +1,95 @@
+import { CircularProgress } from '@mui/material';
 import React from 'react';
-import SearchIcon from '@mui/icons-material/Search';
+import { formatDate, formatTime, getStatus, getStatusColor, centerStyle, sortByStatus } from '../utils';
+import { httpEditAppointment, httpGetAllAppointments, httpGetStudent } from '../requests.hooks';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
 function ViewAppointments() {
     const userInfo = useSelector(state => state.user)
-    function getStatus({completed, cancelled, approved}) {
-        if(completed) {
-            return "completed"
-        } else if(cancelled) {
-            return "cancelled"
-        } else if(approved && !completed) {
-            return "active"
-        } else if(!approved && !cancelled) {
-            return "pending"
-        }
-    }
+    const [loading, setLoading] = React.useState(true)
+    const [currentAppointments, setCurrentAppointments] = React.useState([])
 
-    function getStatusColor(status) {
-        switch(status) {
-            case "active":
-                return {background: "blue"}
-            case "completed":
-                return {background: "green"}
-            case "cancelled":
-                return {background: "red"}
-            case "pending":
-                return {background: "black", color: "white"}
-            default:
-                return
-        }
-    }
 
+    const navigate = useNavigate()
     
+    async function cancelAppointment(appointmentId) {
+        try {
+            const updates = [{field: "cancelled", value: "true"}]
+            const response = await httpEditAppointment({appointmentId, updates})
+            if(response.ok) {
+                alert("appointment deleted successfully")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-    return <div class="white_card card_height_100 mb_30">
-    <div class="white_card_header">
-        <div class="box_header m-0">
-            <div class="main-title">
-                <h3 class="m-0">Data table</h3>
-            </div>
-        </div>
-    </div>
-    <div class="white_card_body">
-        <div class="QA_section">
-            <div class="white_box_tittle list_header">
-                <h4>Table</h4>
-                <div class="box_right d-flex lms_block">
-                    <div class="serach_field_2">
-                        <div class="search_inner">
-                            <form active="#">
-                                <div class="search_field">
-                                    <input type="text" placeholder="Search content here..."/>
-                                </div>
-                                <button type="submit"><SearchIcon /></button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="add_button ms-2">
-                        <a href data-bs-toggle="modal" data-bs-target="#addcategory" class="btn_1">Show unapproved appointments</a>
-                    </div>
-                </div>
-            </div>
-            <div style={{overflowY: "auto", height: "46vh"}} class="QA_table mb_30">
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await httpGetAllAppointments(userInfo._id)
+                const formattedResponses = await Promise.all(
+                    response.body.map(async appointment => {
+                        if(appointment.studentId) {
+                            const studentInfo = await httpGetStudent(appointment.studentId)
+                            return {
+                                ...appointment,
+                                studentSchoolId: studentInfo.schoolId,
+                                studentName: studentInfo.firstName + " " + studentInfo.lastName,
+                            }
+                        } else {
+                            return {
+                                ...appointment,
+                                studentName: "none available",
+                            }
+                        }
+                    })
+                )
+                setCurrentAppointments(sortByStatus(formattedResponses))
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setLoading(false)
+            }
+        };
 
-                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                    <table class="table lms_table_active dataTable no-footer dtr-inline" id="DataTables_Table_0"
-                        role="grid" aria-describedby="DataTables_Table_0_info" style={{width: "697px"}}>
-                        <thead>
-                            <tr role="row">
-                                <th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1" aria-sort="ascending"
-                                    aria-label="title: activate to sort column descending">Student ID</th>
-                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1"
-                                    aria-label="Category: activate to sort column ascending">Student Name</th>
-                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1"
-                                    aria-label="Teacher: activate to sort column ascending">Appointment Date</th>
-                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1"
-                                    aria-label="Lesson: activate to sort column ascending">Referrer</th>
-                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1"
-                                    aria-label="Enrolled: activate to sort column ascending">Date Sent</th>
-                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1"
-                                    aria-label="Status: activate to sort column ascending">Status</th>
-                                <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1"
-                                    aria-label="Status: activate to sort column ascending">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            <tr role="row">
-                                <th scope="row" tabindex="0" class="sorting_1"> <a href class="question_content">
-                                        title here 1</a></th>
-                                <td>Category name</td>
-                                <td>Teacher James</td>
-                                <td>Lessons name</td>
-                                <td>16</td>
-                                <td><a href class="status_btn">Active</a></td>
-                                <td><a href style={{background: "blue", cursor: "pointer"}} class="status_btn">View & Edit</a></td>
-                            </tr>
-                            
-                            <tr role="row">
-                                <th scope="row" tabindex="0" class="sorting_1"> <a href class="question_content">
-                                        title here 1</a></th>
-                                <td>Category name</td>
-                                <td>Teacher James</td>
-                                <td>Lessons name</td>
-                                <td>16</td>
-                                <td><a href class="status_btn">Active</a></td>
-                                <td><a style={{background: "blue", cursor: "pointer"}} href class="status_btn">View & Edit</a></td>
-                            </tr>
-                            
-                            <tr role="row">
-                                <th scope="row" tabindex="0" class="sorting_1"> <a href class="question_content">
-                                        title here 1</a></th>
-                                <td>Category name</td>
-                                <td>Teacher James</td>
-                                <td>Lessons name</td>
-                                <td>16</td>
-                                <td><a href class="status_btn">Active</a></td>
-                                <td><a style={{background: "blue", cursor: "pointer"}} href class="status_btn">View & Edit</a></td>
-                            </tr>
-                            
-                            <tr role="row">
-                                <th scope="row" tabindex="0" class="sorting_1"> <a href class="question_content">
-                                        title here 1</a></th>
-                                <td>Category name</td>
-                                <td>Teacher James</td>
-                                <td>Lessons name</td>
-                                <td>16</td>
-                                <td><a href class="status_btn">Active</a></td>
-                                <td><a style={{background: "blue", cursor: "pointer"}} href class="status_btn">View & Edit</a></td>
-                            </tr>
-                            
-                            <tr role="row">
-                                <th scope="row" tabindex="0" class="sorting_1"> <a href class="question_content">
-                                        title here 1</a></th>
-                                <td>Category name</td>
-                                <td>Teacher James</td>
-                                <td>Lessons name</td>
-                                <td>16</td>
-                                <td><a href class="status_btn">Active</a></td>
-                                <td><a style={{background: "blue", cursor: "pointer"}} href class="status_btn">View & Edit</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        fetchData();
+        
+    }, [userInfo._id])
+
+    const appointmentRowsHTML = currentAppointments.map(appointment => {
+        const status = getStatus(appointment)
+        return <tr key={appointment._id}>
+                    <td>{appointment.studentName}</td>
+                    <td>{formatDate(appointment.appointmentDate)} by {formatTime(appointment.appointmentDate)}</td>
+                    <td>{appointment.isReferral ? "Yes" : "No"}</td>
+                    <td><span style={{display: "block", ...getStatusColor(status), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 0px"}}>{status}</span></td>
+                    <td><a onClick={() => navigate(`/counselor/appointments/${appointment._id}/edit`)} href style={{background: "blue", cursor: "pointer", padding: "6px 0px", ...centerStyle}} className="status_btn">View & Edit</a></td>
+                    <td><a onClick={() => cancelAppointment(appointment._id)} href style={{background: "red", cursor: "pointer", padding: "7px 0px", ...centerStyle}} className="status_btn">Cancel</a></td>
+                </tr>
+    })
+
+    return <div className="messages_chat mb_30">
+    {loading ? <CircularProgress size={100} sx={{color:'black', marginTop: "150px", marginLeft: "200px"}}/> : <div style={{height: "80vh", overflowY: "auto"}} className="white_box ">
+    <h2 style={{color: "black", textAlign: "center"}}>Your appointments</h2>
+    <div className="table-responsive">
+        {currentAppointments.length ? <table className="table">
+            <thead className="table-light">
+                <tr>
+                    <th scope="col">Student</th>
+                    <th scope="col">Date/time</th>
+                    <th scope="col">Referral</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>{appointmentRowsHTML}</tbody>
+        </table> : <h2 style={{textAlign: "center", color: "black", fontSize: "20px", margin: "auto"}}>No appointments currently</h2>}
     </div>
+    </div>}
 </div>
 }
 

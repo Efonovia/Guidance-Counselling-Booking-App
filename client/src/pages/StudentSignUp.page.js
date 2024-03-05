@@ -55,7 +55,7 @@ function StudentSignUp() {
             const response = await httpSignUpStudent(formData)
             if(response.ok) {
                 dispatch(setUser({ user: { type: "student", ...response.body } }))
-                navigate("/student/bookappointment")
+                navigate("/student/appointmentoverview")
             }
 
             console.log(response)

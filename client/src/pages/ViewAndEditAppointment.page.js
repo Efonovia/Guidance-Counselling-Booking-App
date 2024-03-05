@@ -26,10 +26,10 @@ function ViewAndEditAppointment() {
 
     async function markAsComplete() {
         try {
-            const updates = [{field: "completed", value: "true"}]
+            const updates = [{field: "completed", value: appointmentInfo.completed ? "false":"true"}]
             const response = await httpEditAppointment({appointmentId, updates})
             if(response.ok) {
-                alert("appointment completed successfully")
+                alert("appointment edited successfully")
             }
         } catch (error) {
             console.log(error)
@@ -101,7 +101,7 @@ function ViewAndEditAppointment() {
                 appointmentDate: "",
                 appointmentTime: "",
             })
-            navigate("/admin/viewallappointments")
+            navigate(`${userInfo.type === "counselor" ? "/counselor/appointments":"/admin/viewallappointments"}`)
         }
     }
 
@@ -162,7 +162,7 @@ function ViewAndEditAppointment() {
                     {appointmentInfo.isReferral && <><h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Name:&nbsp;<span>{appointmentInfo.referralInfo.name}</span></h3>
                     <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Email:&nbsp;<span>{appointmentInfo.referralInfo.email}</span></h3></>}
                 </div>
-                <div onClick={markAsComplete} style={{background: "green", color: "white", ...centerStyle, padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>Mark as Completed</div>
+                <div onClick={markAsComplete} style={{background: appointmentInfo.completed ? "blue":"green", color: "white", ...centerStyle, padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>{appointmentInfo.completed ? "Mark as Uncompleted" : "Mark as Completed"}</div>
                 </div>
                 <div className="messages_chat mb_30">
                     <div style={{height: "77vh", overflowY: "auto"}} className="white_box ">

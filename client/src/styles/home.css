@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 6rem;
+    gap: 5rem;
     background-image: url(../assets/img/home-bg.png);
 }
 
@@ -24,7 +24,7 @@
 
 .main-content {
     border: 1px solid #14256a;
-    height: 30vh;
+    height: 35vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -78,4 +78,15 @@
     color: #14256a;
     background-color: white;
     border: 1px solid #14256a;
+}
+
+.referrer {
+    background-color: black;
+    color: white;
+}
+
+.referrer:hover {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
 }

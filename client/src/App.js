@@ -14,6 +14,7 @@ import StudentLogin from './pages/StudentLogin.page';
 import StudentSignUp from './pages/StudentSignUp.page';
 import ViewAllAppointments from './pages/ViewAllAppointments.page';
 import ViewAllCounselors from './pages/ViewAllCounselors.page';
+import ReferralAppointment from './pages/ReferralAppointment.page';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
               <Route path="/counselor/login" element={<CounselorLogin />} />
               <Route path="/student/login" element={<StudentLogin />} />
               <Route path="/student/signup" element={<StudentSignUp />} />
+              <Route path="/referral" element={<ReferralAppointment />} />
               <Route path="/student/bookappointment" element={<Navbar><StudentBookAppointment /></Navbar>} />
               <Route path="/student/appointmentoverview" element={<Navbar><StudentAppointmentOverview /></Navbar>} />
               <Route path="/counselor/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />

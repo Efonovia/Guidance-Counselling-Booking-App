@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { checkFormFields, formDataToJson } from '../utils';
+import { checkFormFields, formDataToJson, getStatus } from '../utils';
 import { setUser } from '../state';
-import { httpLoginCounselor } from '../requests.hooks';
+import { httpGetAllAppointments, httpGetAllCounselors, httpGetMessagesBetweenCounselors, httpGetMessagesByAppointment, httpLoginCounselor } from '../requests.hooks';
 import { CircularProgress } from '@mui/material';
 
 
@@ -16,6 +16,52 @@ function CounselorLogin() {
         email: "",
         password: "",
     })
+
+    async function getCounselorMessageNotifications(counselorId, isAdmin) {
+        let preChatList = []
+        let unApprovedAppointments = 0
+        const counselors = await httpGetAllCounselors()
+        counselors?.filter(counselor => {
+            let query
+            if(isAdmin) {
+                query = counselor._id !== counselorId
+            } else {
+                query = counselor.isAdmin && (counselor._id !== counselorId)
+            }
+            return query
+        }).forEach(counselor => {
+            preChatList.push({
+                personId: counselor._id, 
+                type: "counselor", 
+                appointmentId: null,
+            })
+        })
+
+        let appointments = await httpGetAllAppointments(counselorId)
+        appointments?.body.forEach(appointment => {
+            if(!appointment.completed && appointment.studentId) {
+                preChatList.push({personId: appointment.studentId, appointmentId: appointment._id, type: "student"})
+            }
+
+            if(getStatus(appointment) === "pending") {
+                unApprovedAppointments += 1
+            }
+        })
+
+        const messageNotificationsDetails = await Promise.all(
+            preChatList?.map(async preChat => {
+                if(preChat.type === "student") {
+                    const messages = await httpGetMessagesByAppointment(preChat.appointmentId)
+                    return { ...preChat, unseenMessages: messages.unseenMessages }
+                } else if(preChat.type === "counselor") {
+                    const messages = await httpGetMessagesBetweenCounselors(counselorId, preChat.personId)
+                    return { ...preChat, unseenMessages: messages.unseenMessages }
+                }
+            }
+        ))
+
+        return {messageNotificationsDetails, unApprovedAppointments}
+    }
 
     function handleChange(event) {
         const { value, name } = event.target;

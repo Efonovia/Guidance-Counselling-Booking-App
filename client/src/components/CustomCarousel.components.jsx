@@ -1,67 +1,48 @@
 import React from 'react';
-import carPic from "../assets/img/banner.png"
 import { Carousel } from 'rsuite';
 import "../styles/customcarousel.css"
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { httpGetAllCounselors } from '../requests.hooks';
+import { CircularProgress } from '@mui/material';
 
 
-function CustomCarousel() {
+function CustomCarousel(props) {
 
-    const testItems = [
-      {
-        name: "Chance the rapper",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper2",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper3",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper4",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper5",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper6",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper7",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper8",
-        pic: carPic
-      },
-      {
-        name: "Chance the rapper9",
-        pic: carPic
-      },
-    ]
     const [activeIndex, setActiveIndex] = React.useState(0);
+    const [listOfCounselors, setListOfCounselors] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
 
-    const itemsHtml = testItems.map((item, i) => {
+    React.useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const result = await httpGetAllCounselors();
+              setListOfCounselors(result);
+          } catch (error) {
+              console.error('Error fetching appointment:', error);
+          } finally {
+              setLoading(false)
+          }
+      };
+
+      fetchData();
+      
+    }, [])  
+
+    const itemsHtml = listOfCounselors.map((counselor, i) => {
       return <div key={i} className='my-carousel-inner'>
-              <h3>{item.name}</h3>
-              <img alt="..." src={`https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=${i+1}`} height="250" />
+              <h3 style={{position: "absolute", textShadow: "2px 2px black"}}>{counselor.firstName} {counselor.lastName}</h3>
+              <img alt="..." src={`http://localhost:8000/counselors/pic/${counselor.picturePath}`} style={{height:"100%"}} />
             </div>
     })
 
     function moveCarousel(operation) {
       if((operation === "sub" && activeIndex === 0)) {
-        setActiveIndex(testItems.length-1)
+        setActiveIndex(listOfCounselors.length-1)
         return
       }
 
-      if(operation === "add" && activeIndex === testItems.length-1) {
+      if(operation === "add" && activeIndex === listOfCounselors.length-1) {
         setActiveIndex(0)
         return
       }
@@ -79,8 +60,14 @@ function CustomCarousel() {
       }
     }
 
-    return (
+    function handleSelect() {
+      props.setCounselor(listOfCounselors[activeIndex]._id)
+      props.scrollToAppointmentForm()
+    }
+
+    return ( loading ? <CircularProgress size={100} sx={{color:'black', margin: "150px 400px"}}/> : 
       <div className='overall'>
+        <h2 style={{color: "black", marginBottom: "-40px"}}>Select a Counselor</h2>
         <div className='outer'>
           <ArrowBackIosIcon onClick={() => moveCarousel("sub")} sx={{cursor: "pointer"}} />
           <Carousel
@@ -95,7 +82,7 @@ function CustomCarousel() {
           <ArrowForwardIosIcon onClick={() => moveCarousel("add")} sx={{cursor: "pointer"}} />
         </div>
 
-        <div className='next-btn'>Select & Proceed</div>
+        <div onClick={handleSelect} className='next-btn'>Select & Proceed</div>
       </div>
     );
 }
