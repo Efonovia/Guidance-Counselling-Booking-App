@@ -54,8 +54,9 @@ export const getMessagesByAppointment = async (req, res) => {
     try {
         const { id } = req.params
         const messages = await MessageDatabase.find({ appointmentId: id })
-        const unseenMessages = messages.filter(message => !message.seen).length
-        return res.status(200).json({ok: true, body: messages, unseenMessages})
+        const unseenMessagesIds = messages.filter(message => !message.seen).map(message => message._id)
+        const unseenMessages = unseenMessagesIds.length
+        return res.status(200).json({ok: true, body: messages, unseenMessages, unseenMessagesIds})
   } catch (error) {
         console.log(error)
         return res.status(404).json({ok: false, error: error.message})
@@ -81,22 +82,22 @@ export const viewMessage = async(req, res) => {
 }
 
 
-const findMessagesBetweenCounselors = async (req, res) => {
+export const findMessagesBetweenCounselors = async (req, res) => {
     try {
         const { counselorId1, counselorId2 } = req.params;
+        console.log(req.params)
         const messages = await MessageDatabase.find({
             $or: [
-                { 'sender.userId': counselorId1, 'receiver.userId': counselorId2 },
-                { 'sender.userId': counselorId2, 'receiver.userId': counselorId1 }
+                { 'sender.id': counselorId1, 'receiver.id': counselorId2 },
+                { 'sender.id': counselorId2, 'receiver.id': counselorId1 }
             ]
         });
-
-        const unseenMessages = messages.filter(message => !message.seen).length
-        return res.status(200).json({ok: true, body: messages, unseenMessages})
+        const unseenMessagesIds = messages.filter(message => !message.seen).map(message => message._id)
+        const unseenMessages = unseenMessagesIds.length
+        return res.status(200).json({ok: true, body: messages, unseenMessages, unseenMessagesIds})
     } catch (error) {
         console.error('Error finding messages between counselors:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
-export { findMessagesBetweenCounselors };

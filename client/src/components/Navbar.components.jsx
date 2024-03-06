@@ -17,6 +17,9 @@ function Navbar({ children }) {
     const [showSideBar, setShowSideBar] = React.useState(false)
     const navigate = useNavigate()
     const userInfo = useSelector(state => state.user)
+    const notificationsInfo = useSelector(state => state.notifications)
+    const hasMessages = notificationsInfo.messageNotificationsDetails.some(n => n.unseenMessages)
+    const hasPendingAppointments = notificationsInfo.unApprovedAppointments
     const location = useLocation()
 
 
@@ -41,6 +44,7 @@ function Navbar({ children }) {
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <EventSeatIcon />
+                            {hasPendingAppointments && <span className='cen-col' style={{background: "red", height: "10px", width: "10px", borderRadius: "100%"}}></span>}
                                 </div>
                                 <span style={{ color: location.pathname === "/admin/viewallappointments" && "black" }}>All Appointments</span>
                             </a>
@@ -73,6 +77,7 @@ function Navbar({ children }) {
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <MessageIcon />
+                            {hasMessages && <span className='cen-col' style={{background: "red", height: "10px", width: "10px", borderRadius: "100%"}}></span>}
                                 </div>
                                 <span style={{ color: location.pathname === "/admin/messages" && "black" }}>Messages</span>
                             </a>
@@ -100,6 +105,7 @@ function Navbar({ children }) {
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <MessageIcon />
+                            {hasMessages && <span className='cen-col' style={{background: "red", height: "10px", width: "10px", borderRadius: "100%"}}></span>}
                                 </div>
                                 <span style={{ color: location.pathname === "/counselor/messages" && "blue" }}>Messages</span>
                             </a>
@@ -108,6 +114,7 @@ function Navbar({ children }) {
                             <a className="has-arrow" href aria-expanded="false">
                                 <div className="icon_menu">
                                     <HowToRegIcon />
+                            {hasPendingAppointments && <span className='cen-col' style={{background: "red", height: "10px", width: "10px", borderRadius: "100%"}}></span>}
                                 </div>
                                 <span style={{ color: location.pathname === "/counselor/appointments" && "blue" }}>My Appointments</span>
                             </a>

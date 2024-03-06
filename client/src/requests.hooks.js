@@ -151,7 +151,7 @@ export const httpSendMessage = async (messageDetails) => {
         })
         const result = await response.json()
         if(result?.ok) {
-            return result.body;
+            return result;
         } else {
             throw new Error('Failed to send message. try again');
         }
@@ -171,6 +171,8 @@ export const httpViewMessage = async (messageId) => {
         if(!result.ok) {
             throw new Error(result.error + ". try again");
         }
+        console.log(result)
+        return result
     } catch (error) {
         console.log(error)
         alert(error)
@@ -180,9 +182,7 @@ export const httpViewMessage = async (messageId) => {
 
 export const httpGetMessagesByAppointment = async (appointmentId) => {
     try {
-        const response = await fetch(`${API_URL}/messages/appointment/${appointmentId}`, {
-            method: "POST",
-        })
+        const response = await fetch(`${API_URL}/messages/appointment/${appointmentId}`)
         const result = await response.json()
         if(!result?.ok) {
             throw new Error(result.error + ". try again");
@@ -198,11 +198,9 @@ export const httpGetMessagesByAppointment = async (appointmentId) => {
 
 export const httpGetMessagesBetweenCounselors = async (counselorId1,counselorId2) => {
     try {
-        const response = await fetch(`${API_URL}/messages/betweencounselors/${counselorId1}/${counselorId2}`, {
-            method: "POST",
-        })
+        const response = await fetch(`${API_URL}/messages/betweencounselors/${counselorId1}/${counselorId2}`)
         const result = await response.json()
-        if(result.ok) {
+        if(result?.ok) {
             return result
         } else {
             throw new Error(result.error + ". try again");

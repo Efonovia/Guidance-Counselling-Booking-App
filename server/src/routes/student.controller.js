@@ -104,7 +104,7 @@ export const createNewStudent = async (req, res) => {
 export const getStudentPicture = async (req, res) => {
   try {
       const { picturePath } = req.params
-      return res.sendFile(path.join(getDirname(), "../uploads", picturePath))
+      return res.sendFile(path.join(getDirname(), "../../uploads", picturePath))
   } catch (error) {
       return res.status(404).json({error: error.message})
   }

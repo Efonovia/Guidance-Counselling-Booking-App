@@ -1,12 +1,26 @@
 import React from 'react';
-import { httpGetAllAppointments, httpGetAllCounselors, httpGetStudent } from '../requests.hooks';
-import { useSelector } from 'react-redux';
+import { 
+    httpGetAllAppointments, 
+    httpGetAllCounselors, 
+    httpGetMessagesBetweenCounselors, 
+    httpGetMessagesByAppointment, 
+    httpGetStudent, 
+    httpSendMessage, 
+    httpViewMessage 
+} from '../requests.hooks';
+import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+import { formatDate, formatTime } from '../utils';
+import { setNotifications } from '../state';
 
 
 function MessagesPage() {
-    const userInfo = useSelector(state => state.user)
+    const dispatch = useDispatch()
 
+    const userInfo = useSelector(state => state.user)
+    const notificationsInfo = useSelector(state => state.notifications)
+
+    const [messageContent, setMessageContent] = React.useState("")
     const [contactList, setContactList] = React.useState([])
     const [loading, setLoading] = React.useState(true)
     const [selectedContact, setSelectedContact] = React.useState(null)
@@ -62,6 +76,74 @@ function MessagesPage() {
         }
     }
 
+    async function markAllAsRead() {
+        let unreadMessagesIds = []
+        notificationsInfo?.messageNotificationsDetails?.forEach(message => {
+            unreadMessagesIds.push(...message.unseenMessagesIds)
+        })
+
+        const allResults = await Promise.all(
+            unreadMessagesIds?.map(async id => (await httpViewMessage(id)).ok)
+        )
+
+        console.log(allResults)
+
+        if(allResults.every(res => res)) {
+            dispatch(setNotifications({ notifications: { unApprovedAppointments: notificationsInfo.unApprovedAppointments, messageNotificationsDetails: [] } }))
+        }
+    }
+
+    async function viewContactMessages(person) {
+        setSelectedContact(person)
+        try {
+            if(person.type === "student") {
+                const messagesResult = await httpGetMessagesByAppointment(person.appointmentId)
+                setCurrentContactMessages(messagesResult?.body)
+            } else if(person.type === "counselor") {
+                const messagesResult = await httpGetMessagesBetweenCounselors(userInfo._id, person.personId)
+                setCurrentContactMessages(messagesResult?.body)
+                console.log(messagesResult?.body)
+            }
+            setMessageContent("")
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setCurrentContactMessagesLoading(false)
+        }   
+    }
+
+    function onMessageChange(event) {
+        setMessageContent(event.target.value)
+    }
+
+    async function submitMessage() {
+        const messageDetails = {
+            sender: {
+                id: userInfo._id,
+                name: userInfo.firstName + " " + userInfo.lastName,
+                type: "counselor",
+                picture: userInfo.picturePath
+            },
+            receiver: {
+                id: selectedContact.personId,
+                name: selectedContact.personName,
+                type: selectedContact.type,
+                picture: selectedContact.picture
+            },
+            appointmentId: selectedContact.appointmentId,
+            messageContent,
+        }
+
+        console.log(messageDetails)
+        setMessageContent("")
+        try {
+            const sentMessageResult = await httpSendMessage(messageDetails)
+            setCurrentContactMessages(prev => [...prev, sentMessageResult.body])
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     React.useEffect(() => {
         const fetchData = async () => {
             try {
@@ -78,17 +160,53 @@ function MessagesPage() {
         
     }, [userInfo._id, userInfo.isAdmin])
 
+    const messagesHTML = currentContactMessages?.map(message => {
+        if(message.sender.id === userInfo._id) {
+            return <div key={message._id} className="single_message_chat">
+                        <div className="message_pre_left">
+                            <div className="message_preview_thumb">
+                                <img src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
+                            </div>
+                            <div className="messges_info">
+                                <h4>{message.sender.name}</h4>
+                                <p>{formatDate(message.dateSent)} by {formatTime(message.dateSent)}</p>
+                            </div>
+                        </div>
+                        <div className="message_content_view red_border">
+                            <p>{message.messageContent}</p>
+                        </div>
+                    </div>
+        }
+        return <div key={message._id} className="single_message_chat sender_message">
+                    <div className="message_pre_left">
+                        <div className="messges_info">
+                            <h4>{message.sender.name}</h4>
+                            <p>{formatDate(message.dateSent)} by {formatTime(message.dateSent)}</p>
+                        </div>
+                        <div className="message_preview_thumb">
+                            <img src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
+                        </div>
+                    </div>
+                    <div style={{background: "#c8c8c8"}} className="message_content_view">
+                        <p style={{color: "black"}}>{message.messageContent}</p>
+                    </div>
+                </div>
+    })
+
     const contactListHTML = contactList?.map(person => {
-        return <li style={{cursor: "pointer"}} key={person.personId}>
+        console.log("jere",notificationsInfo)
+        const notification = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === person.personId)?.unseenMessages
+        return <li onClick={()=>viewContactMessages(person)} style={{cursor: "pointer"}} key={person.personId}>
                     <a href>
                         <div className="message_pre_left">
                             <div className="message_preview_thumb">
                                 <img src={`http://localhost:8000/${person.type}s/pic/${person.picture}`} alt=""/>
                             </div>
                             <div className="messges_info">
-                                <h4>{person.personName}</h4>
-                                <p>{person.type === "student" ? "Student Appointment" : "Admin"}</p>
+                                <h4 style={{textDecoration: person.personId === selectedContact?.personId ? "underline": "none"}}>{person.personName}</h4>
+                                <p>{person.type}</p>
                             </div>
+                            {Boolean(notification) && <div className='cen-col' style={{background: "red", color: "white", fontSize: "10px", height: "15px", width: "15px", borderRadius: "100%"}}>{notification}</div>}
                         </div>
                     </a>
                 </li>
@@ -98,83 +216,19 @@ function MessagesPage() {
                 <div className="messages_list">
                     <div className="white_box ">
                         <div className="white_box_tittle list_header">
-                            <h4 style={{textAlign: "center"}}>All Counselors</h4>
+                            <h4 style={{textAlign: "center"}}>Recipients</h4>
+                            {Boolean(notificationsInfo.messageNotificationsDetails.length) && <div onClick={markAllAsRead} style={{background: "blue", color: "white", textAlign: "center", padding: "3px 6px", borderRadius: "3px", cursor: "pointer"}} className='cen-row'>Mark all as read</div>}
                         </div>
                         <ul style={{height: "50vh", overflowY: "auto"}}>{contactListHTML}</ul>
                     </div>
                 </div>
-                <div className="messages_chat mb_30">
-                    <div style={{height: "65vh", overflowY: "auto"}} className="white_box ">
-                        <div className="single_message_chat">
-                            <div className="message_pre_left">
-                                <div className="message_preview_thumb">
-                                    <img src="img/messages/1.png" alt=""/>
-                                </div>
-                                <div className="messges_info">
-                                    <h4>Travor James</h4>
-                                    <p>Yesterday at 6.33 pm</p>
-                                </div>
-                            </div>
-                            <div className="message_content_view red_border">
-                                <p>
-                                    how are you doing
-                                </p>
-                            </div>
-                        </div>
-                        <div className="single_message_chat sender_message">
-                            <div className="message_pre_left">
-                                <div className="messges_info">
-                                    <h4>Agatha Kristy</h4>
-                                    <p>Yesterday at 6.33 pm</p>
-                                </div>
-                                <div className="message_preview_thumb">
-                                    <img src="img/messages/1.png" alt=""/>
-                                </div>
-                            </div>
-                            <div className="message_content_view">
-                                <p>
-                                    how are you doing
-                                </p>
-                            </div>
-                        </div>
-                        <div className="single_message_chat sender_message">
-                            <div className="message_pre_left">
-                                <div className="messges_info">
-                                    <h4>Agatha Kristy</h4>
-                                    <p>Yesterday at 6.33 pm</p>
-                                </div>
-                                <div className="message_preview_thumb">
-                                    <img src="img/messages/1.png" alt=""/>
-                                </div>
-                            </div>
-                            <div className="message_content_view">
-                                <p>
-                                    how are you doing
-                                </p>
-                            </div>
-                        </div>
-                        <div className="single_message_chat sender_message">
-                            <div className="message_pre_left">
-                                <div className="messges_info">
-                                    <h4>Agatha Kristy</h4>
-                                    <p>Yesterday at 6.33 pm</p>
-                                </div>
-                                <div className="message_preview_thumb">
-                                    <img src="img/messages/1.png" alt=""/>
-                                </div>
-                            </div>
-                            <div className="message_content_view">
-                                <p>
-                                    how are you doing
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                {selectedContact ? (currentContactMessagesLoading ? <CircularProgress sx={{color:'black', marginTop: "150px", marginLeft: "200px"}} size={100}/> : <div className="messages_chat mb_30">
+                    {currentContactMessages?.length ? <div style={{height: "55vh", overflowY: "auto"}} className="white_box ">{messagesHTML}</div>: <h3 style={{color: "black", textAlign: "center", height: "55vh"}}>You have no messages with {selectedContact.personName}</h3>}
                     <div style={{position: "sticky", marginTop: "-20px"}} className="message_send_field">
-                        <textarea rows={3} style={{resize: "none", borderRadius: "5px", padding: "5px"}} placeholder="Write your message"/>
-                        <button className="btn_1" type="submit">Send</button>
+                        <textarea value={messageContent} onChange={onMessageChange} rows={2} style={{resize: "none", borderRadius: "5px", padding: "5px"}} placeholder="Send a message"/>
+                        <button className="btn_1" type="submit" onClick={submitMessage}>Send</button>
                     </div>
-                </div>
+                </div>) : <h2 style={{color: "black", textAlign: "center"}}>Select a contact to view it's messages</h2>}
             </div>
 }
 

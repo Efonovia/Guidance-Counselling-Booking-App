@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { checkFormFields, formDataToJson, getStatus } from '../utils';
-import { setUser } from '../state';
+import { setNotifications, setUser } from '../state';
 import { httpGetAllAppointments, httpGetAllCounselors, httpGetMessagesBetweenCounselors, httpGetMessagesByAppointment, httpLoginCounselor } from '../requests.hooks';
 import { CircularProgress } from '@mui/material';
 
@@ -17,7 +17,7 @@ function CounselorLogin() {
         password: "",
     })
 
-    async function getCounselorMessageNotifications(counselorId, isAdmin) {
+    async function getCounselorNotifications(counselorId, isAdmin) {
         let preChatList = []
         let unApprovedAppointments = 0
         const counselors = await httpGetAllCounselors()
@@ -52,10 +52,10 @@ function CounselorLogin() {
             preChatList?.map(async preChat => {
                 if(preChat.type === "student") {
                     const messages = await httpGetMessagesByAppointment(preChat.appointmentId)
-                    return { ...preChat, unseenMessages: messages.unseenMessages }
+                    return { ...preChat, unseenMessages: messages.unseenMessages, unseenMessagesIds: messages.unseenMessagesIds }
                 } else if(preChat.type === "counselor") {
                     const messages = await httpGetMessagesBetweenCounselors(counselorId, preChat.personId)
-                    return { ...preChat, unseenMessages: messages.unseenMessages }
+                    return { ...preChat, unseenMessages: messages.unseenMessages, unseenMessagesIds: messages.unseenMessagesIds }
                 }
             }
         ))
@@ -89,10 +89,16 @@ function CounselorLogin() {
 
             setLoading(true)
             const response = await httpLoginCounselor(formDetails)
+            dispatch(setUser({ user: { type: response.body.isAdmin ? "admin" : "counselor", ...response.body } }))
+
+            const notificationsResults = await getCounselorNotifications(response.body._id, response.body.isAdmin)
+            dispatch(setNotifications({ notifications: notificationsResults }))
+            console.log("notis", notificationsResults)
             if(response?.ok) {
-                dispatch(setUser({ user: { type: response.body.isAdmin ? "admin" : "counselor", ...response.body } }))
                 navigate(`/${response.body.isAdmin ? "admin" : "counselor"}/schedule`)
             }
+
+            
             console.log(response)
         } catch (error) {
             setLoading(false)

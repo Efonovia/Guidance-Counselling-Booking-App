@@ -15,6 +15,7 @@ import StudentSignUp from './pages/StudentSignUp.page';
 import ViewAllAppointments from './pages/ViewAllAppointments.page';
 import ViewAllCounselors from './pages/ViewAllCounselors.page';
 import ReferralAppointment from './pages/ReferralAppointment.page';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 
 function App() {
@@ -25,20 +26,29 @@ function App() {
               <Route path="/student/login" element={<StudentLogin />} />
               <Route path="/student/signup" element={<StudentSignUp />} />
               <Route path="/referral" element={<ReferralAppointment />} />
-              <Route path="/student/bookappointment" element={<Navbar><StudentBookAppointment /></Navbar>} />
-              <Route path="/student/appointmentoverview" element={<Navbar><StudentAppointmentOverview /></Navbar>} />
-              <Route path="/counselor/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />
-              <Route path="/counselor/schedule" element={<Navbar><MySchedule /></Navbar>} />
-              <Route path="/counselor/messages" element={<Navbar><MessagesPage /></Navbar>} />
-              <Route path="/counselor/appointments" element={<Navbar><ViewAppointments /></Navbar>} />
-              <Route path="/counselor/appointments/:id/edit" element={<Navbar><ViewAndEditAppointment /></Navbar>} />
-              <Route path="/admin/schedule" element={<Navbar><MySchedule /></Navbar>} />
-              <Route path="/admin/viewallappointments" element={<Navbar><ViewAllAppointments /></Navbar>} />
-              <Route path="/admin/viewallcounselors" element={<Navbar><ViewAllCounselors /></Navbar>} />
-              <Route path="/admin/appointments/:id/edit" element={<Navbar><ViewAndEditAppointment /></Navbar>} />
-              <Route path="/admin/messages" element={<Navbar><MessagesPage /></Navbar>} />
-              <Route path="/admin/createcounselor" element={<Navbar><CreateCounselor /></Navbar>} />
-              <Route path="/admin/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />
+
+              <Route element={<ProtectedRoute role="student" />}>
+                  <Route path="/student/bookappointment" element={<Navbar><StudentBookAppointment /></Navbar>} />
+                  <Route path="/student/appointmentoverview" element={<Navbar><StudentAppointmentOverview /></Navbar>} />
+              </Route>
+
+              <Route element={<ProtectedRoute role="counselor" />}>
+                  <Route path="/counselor/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />
+                  <Route path="/counselor/schedule" element={<Navbar><MySchedule /></Navbar>} />
+                  <Route path="/counselor/messages" element={<Navbar><MessagesPage /></Navbar>} />
+                  <Route path="/counselor/appointments" element={<Navbar><ViewAppointments /></Navbar>} />
+                  <Route path="/counselor/appointments/:id/edit" element={<Navbar><ViewAndEditAppointment /></Navbar>} />
+              </Route>
+
+              <Route element={<ProtectedRoute role="admin" />}>
+                  <Route path="/admin/schedule" element={<Navbar><MySchedule /></Navbar>} />
+                  <Route path="/admin/viewallappointments" element={<Navbar><ViewAllAppointments /></Navbar>} />
+                  <Route path="/admin/viewallcounselors" element={<Navbar><ViewAllCounselors /></Navbar>} />
+                  <Route path="/admin/appointments/:id/edit" element={<Navbar><ViewAndEditAppointment /></Navbar>} />
+                  <Route path="/admin/messages" element={<Navbar><MessagesPage /></Navbar>} />
+                  <Route path="/admin/createcounselor" element={<Navbar><CreateCounselor /></Navbar>} />
+                  <Route path="/admin/createappointment" element={<Navbar><CreateAppointment /></Navbar>} />
+              </Route>
             </Routes>
           </BrowserRouter>
 }

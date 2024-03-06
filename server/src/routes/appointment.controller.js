@@ -123,7 +123,7 @@ export const getCurrentAppointment = async (req, res) => {
         }
         const counselor = await CounselorDatabase.findById(appointment.counselorId)
         
-        return res.status(200).json({ok: true, body: { ...appointment._doc, counselorName: counselor.firstName + " " + counselor.lastName}});
+        return res.status(200).json({ok: true, body: { ...appointment._doc, counselorId: counselor._id, counselorPicture: counselor.picturePath, counselorName: counselor.firstName + " " + counselor.lastName}});
     } catch (error) {
         console.error("Error finding appointment:", error);
         return res.status(500).json({ ok: false, error: "Internal server error" });

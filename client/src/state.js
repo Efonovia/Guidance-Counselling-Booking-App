@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   mode: "light",
   user: null,
-//   applications: null
+  notifications: null
 };
 
 export const authSlice = createSlice({
@@ -24,5 +24,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setUser, setLoggedIn } = authSlice.actions;
+export const { setMode, setUser, setLoggedIn, setNotifications } = authSlice.actions;
 export default authSlice.reducer; 
