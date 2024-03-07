@@ -1,14 +1,14 @@
 import React from 'react';
 import ComboBox from '../components/mui/Autocomplete.components';
 import { CircularProgress } from '@mui/material';
-import { httpBookAppointment, httpGetAllCounselors } from '../requests.hooks';
+import { httpBookAppointment, httpGetAllCounselors, httpGetCurrentAppointment } from '../requests.hooks';
 import { checkFormFields, dateTimeStringToDate, formDataToJson } from '../utils';
 import { useSelector } from 'react-redux';
 
 
 function CreateAppointment() {
     const userInfo = useSelector(state => state.user)
-    const [loading, setLoading] = React.useState(false)
+    const [loading, setLoading] = React.useState(true)
     const [listOfCounselors, setListOfCounselors] = React.useState([])
     const [formDetails, setFormDetails] = React.useState({
         studentSchoolId: "",
@@ -63,6 +63,12 @@ function CreateAppointment() {
             }
             
             setLoading(true)
+            const studentCurrentAppointment = await httpGetCurrentAppointment(formDetails.studentSchoolId)
+
+            if(studentCurrentAppointment.body) {
+                alert("student already has an appointment")
+                return
+            }
             const response = await httpBookAppointment(formDataToJson(formData))
             console.log(response)
             if(response?.ok) {

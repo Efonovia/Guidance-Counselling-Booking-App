@@ -19,7 +19,7 @@ function Navbar({ children }) {
     const userInfo = useSelector(state => state.user)
     const notificationsInfo = useSelector(state => state.notifications)
     const hasMessages = notificationsInfo.messageNotificationsDetails.some(n => n.unseenMessages)
-    const hasPendingAppointments = notificationsInfo.unApprovedAppointments
+    const hasPendingAppointments = Boolean(notificationsInfo.unApprovedAppointments)
     const location = useLocation()
 
 
@@ -127,7 +127,7 @@ function Navbar({ children }) {
                                 <div className="icon_menu">
                                     <CalendarMonthIcon />
                                 </div>
-                                <span style={{ color: location.pathname === "/student/appointmentoverview" && "#2ddf00" }}>My Appointment</span>
+                                <span style={{ color: location.pathname === "/student/appointmentoverview" && "#f84c4c" }}>My Appointment</span>
                             </a>
                         </li>
                         <li onClick={()=>navigate("/student/bookappointment")} style={{ cursor: "pointer" }}>
@@ -135,7 +135,7 @@ function Navbar({ children }) {
                                 <div className="icon_menu">
                                     <AddIcon />
                                 </div>
-                                <span style={{ color: location.pathname === "/student/bookappointment" && "#2DDF00" }}>Book Appointment</span>
+                                <span style={{ color: location.pathname === "/student/bookappointment" && "#f84c4c" }}>Book Appointment</span>
                             </a>
                         </li>
                     </ul>}

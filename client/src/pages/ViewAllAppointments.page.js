@@ -10,7 +10,7 @@ function ViewAllAppointments() {
     const [loading, setLoading] = React.useState(true)
     const [selectedCounselor, setSelectedCounselor] = React.useState(null)
     const [currentAppointments, setCurrentAppointments] = React.useState([])
-    const [currentAppointmentsLoading, setCurrentAppointmentsLoading] = React.useState(true)
+    const [currentAppointmentsLoading, setCurrentAppointmentsLoading] = React.useState(false)
 
     const navigate = useNavigate()
     
@@ -29,6 +29,7 @@ function ViewAllAppointments() {
     async function viewCounselorAppointments(counselorId, name) {
         setSelectedCounselor({counselorId, name})
         try {
+            setCurrentAppointmentsLoading(true)
             const response = await httpGetAllAppointments(counselorId)
             const formattedResponses = await Promise.all(
                 response.body.map(async appointment => {
@@ -76,7 +77,7 @@ function ViewAllAppointments() {
                 <a href>
                     <div className="message_pre_left">
                         <div className="message_preview_thumb">
-                            <img src={`http://localhost:8000/counselors/pic/${counselor.picturePath}`} alt=""/>
+                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/counselors/pic/${counselor.picturePath}`} alt=""/>
                         </div>
                         <div className="messges_info">
                             <h4>{counselor.firstName} {counselor.lastName}</h4>

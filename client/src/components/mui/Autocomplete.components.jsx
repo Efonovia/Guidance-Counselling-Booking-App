@@ -20,7 +20,7 @@ export default function ComboBox(props) {
       renderInput={(params) => <TextField {...params} label={props.label} />}
       renderOption={(props, option) => (
         <li {...props}>
-          <img src={option.pic} alt={option.label} style={{ marginRight: '8px', width: '60px', height: '60px' }} />
+          <img src={option.pic} alt={option.label} style={{ marginRight: '8px', width: '60px', height: '60px', objectFit: "cover" }} />
           {option.label}
         </li>
       )}

@@ -1,5 +1,4 @@
 import React from 'react';
-import profilePhoto from "../assets/img/client_img.png"
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { capitalizeWords } from '../utils';
@@ -14,7 +13,7 @@ function PostNavbar({ children, openSideBar }) {
 	function getStyles() {
 		switch(userInfo.type) {
 			case "student":
-				return { background: "#6EF84C" }
+				return { background: "#f84c4c" }
 			case "counselor":
 				return { background: "#4c6ef8" }
 			case "admin":
@@ -39,16 +38,16 @@ function PostNavbar({ children, openSideBar }) {
 								<div style={{width: "10%", cursor: "pointer"}} className='sidebar_icon d-lg-none' onClick={openSideBar}>
 									<MenuIcon sx={{color: userInfo.type === "admin" ? "white" : "black"}} />
 								</div>
-								<h2 style={{textAlign: 'center', color: userInfo.type === "admin" ? "white" : "black"}}>{capitalizeWords((userInfo.type))} Dashboard</h2>
+								<h2 style={{textAlign: 'center', color: "white"}}>{capitalizeWords((userInfo.type))} Dashboard</h2>
 								<div className="cen-col">
 									<div className='cen-row'>
 										<div className="profile_info">
-											<img src={profilePhoto} alt="alt" />
+											<img style={{objectFit: "cover"}} height={40} width={40} src={`http://localhost:8000/counselors/pic/${userInfo.picturePath}`} alt="alt" />
 										</div>
 
 										<button onClick={logout}>logout</button>
 									</div>
-									<div style={{color: userInfo.type === "admin" ? "white" : "black"}}>{userInfo.firstName} {userInfo.lastName}</div>
+									<div style={{color: "white"}}>{userInfo.firstName} {userInfo.lastName}</div>
 								</div>
 							</div>
 						</div>

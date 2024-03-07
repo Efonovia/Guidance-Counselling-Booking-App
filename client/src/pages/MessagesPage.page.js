@@ -16,6 +16,7 @@ import { setNotifications } from '../state';
 
 function MessagesPage() {
     const dispatch = useDispatch()
+    const messagesRef = React.useRef(null)
 
     const userInfo = useSelector(state => state.user)
     const notificationsInfo = useSelector(state => state.notifications)
@@ -104,6 +105,9 @@ function MessagesPage() {
                 setCurrentContactMessages(messagesResult?.body)
                 console.log(messagesResult?.body)
             }
+            if(messagesRef.current !== null) {
+                messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+            }
             setMessageContent("")
         } catch (error) {
             console.log(error)
@@ -117,6 +121,10 @@ function MessagesPage() {
     }
 
     async function submitMessage() {
+        if(!Boolean(messageContent)) {
+            alert("can't send an empty message")
+            return
+        }
         const messageDetails = {
             sender: {
                 id: userInfo._id,
@@ -139,6 +147,9 @@ function MessagesPage() {
         try {
             const sentMessageResult = await httpSendMessage(messageDetails)
             setCurrentContactMessages(prev => [...prev, sentMessageResult.body])
+            if(messagesRef.current !== null) {
+                messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+            }
         } catch (error) {
             console.log(error)
         }
@@ -165,7 +176,7 @@ function MessagesPage() {
             return <div key={message._id} className="single_message_chat">
                         <div className="message_pre_left">
                             <div className="message_preview_thumb">
-                                <img src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
+                                <img style={{objectFit: "cover"}} src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
                             </div>
                             <div className="messges_info">
                                 <h4>{message.sender.name}</h4>
@@ -184,7 +195,7 @@ function MessagesPage() {
                             <p>{formatDate(message.dateSent)} by {formatTime(message.dateSent)}</p>
                         </div>
                         <div className="message_preview_thumb">
-                            <img src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
+                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
                         </div>
                     </div>
                     <div style={{background: "#c8c8c8"}} className="message_content_view">
@@ -193,14 +204,18 @@ function MessagesPage() {
                 </div>
     })
 
-    const contactListHTML = contactList?.map(person => {
-        console.log("jere",notificationsInfo)
+    const sortedContactList = contactList.sort((a,b) => {
+        const A = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === a.personId)?.unseenMessages
+        const B = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === b.personId)?.unseenMessages
+        return B-A
+    })
+    const contactListHTML = sortedContactList?.map(person => {
         const notification = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === person.personId)?.unseenMessages
         return <li onClick={()=>viewContactMessages(person)} style={{cursor: "pointer"}} key={person.personId}>
                     <a href>
                         <div className="message_pre_left">
                             <div className="message_preview_thumb">
-                                <img src={`http://localhost:8000/${person.type}s/pic/${person.picture}`} alt=""/>
+                                <img style={{objectFit: "cover"}} src={`http://localhost:8000/${person.type}s/pic/${person.picture}`} alt=""/>
                             </div>
                             <div className="messges_info">
                                 <h4 style={{textDecoration: person.personId === selectedContact?.personId ? "underline": "none"}}>{person.personName}</h4>
@@ -223,7 +238,7 @@ function MessagesPage() {
                     </div>
                 </div>
                 {selectedContact ? (currentContactMessagesLoading ? <CircularProgress sx={{color:'black', marginTop: "150px", marginLeft: "200px"}} size={100}/> : <div className="messages_chat mb_30">
-                    {currentContactMessages?.length ? <div style={{height: "55vh", overflowY: "auto"}} className="white_box ">{messagesHTML}</div>: <h3 style={{color: "black", textAlign: "center", height: "55vh"}}>You have no messages with {selectedContact.personName}</h3>}
+                    {currentContactMessages?.length ? <div ref={messagesRef} style={{height: "55vh", overflowY: "auto"}} className="white_box ">{messagesHTML}</div>: <h3 style={{color: "black", textAlign: "center", height: "55vh"}}>You have no messages with {selectedContact.personName}</h3>}
                     <div style={{position: "sticky", marginTop: "-20px"}} className="message_send_field">
                         <textarea value={messageContent} onChange={onMessageChange} rows={2} style={{resize: "none", borderRadius: "5px", padding: "5px"}} placeholder="Send a message"/>
                         <button className="btn_1" type="submit" onClick={submitMessage}>Send</button>
