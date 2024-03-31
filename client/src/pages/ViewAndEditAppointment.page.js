@@ -26,7 +26,7 @@ function ViewAndEditAppointment() {
 
     async function markAsComplete() {
         try {
-            const updates = [{field: "completed", value: appointmentInfo.completed ? "false":"true"}]
+            const updates = [{field: "completed", value: appointmentInfo?.completed ? "false":"true"}]
             const response = await httpEditAppointment({appointmentId, updates})
             if(response.ok) {
                 alert("appointment edited successfully")
@@ -67,7 +67,7 @@ function ViewAndEditAppointment() {
             
             setLoading(true)
             let updates = []
-            if(!appointmentInfo.approved) {
+            if(!appointmentInfo?.approved) {
                 updates.push({ field: "approved", value: true })
             }
             for (const field in formDetails) {
@@ -75,10 +75,10 @@ function ViewAndEditAppointment() {
                     updates.push({field, value: formDetails[field]})
                 }
             }
-            if(userInfo.type === "admin" && formDetails.counselor.id !== appointmentInfo.counselorId) {
+            if(userInfo.type === "admin" && formDetails.counselor.id !== appointmentInfo?.counselorId) {
                 updates.push({field: "counselorId", value: formDetails.counselor.id})
             } 
-            if(new Date(dateTimeStringToDate(formDetails.appointmentDate, formDetails.appointmentTime)).getTime() !== new Date(appointmentInfo.appointmentDate).getTime()) {
+            if(new Date(dateTimeStringToDate(formDetails.appointmentDate, formDetails.appointmentTime)).getTime() !== new Date(appointmentInfo?.appointmentDate).getTime()) {
                 updates.push({field: "appointmentDate", value: dateTimeStringToDate(formDetails.appointmentDate, formDetails.appointmentTime)})
             } 
     
@@ -138,11 +138,11 @@ function ViewAndEditAppointment() {
 
     React.useEffect(() => {
         if (appointmentInfo) {
-            const { appointmentDate, appointmentTime } = getDateAndTimeObject(appointmentInfo.appointmentDate);
+            const { appointmentDate, appointmentTime } = getDateAndTimeObject(appointmentInfo?.appointmentDate);
             setFormDetails({
-                studentSchoolId: appointmentInfo.studentSchoolId,
-                counselor: { id: appointmentInfo.counselorId, label: appointmentInfo.counselorName, pic: `http://localhost:8000/counselors/pic/${appointmentInfo.counselorPic}` },
-                note: appointmentInfo.note,
+                studentSchoolId: appointmentInfo?.studentSchoolId,
+                counselor: { id: appointmentInfo?.counselorId, label: appointmentInfo?.counselorName, pic: `http://localhost:8000/counselors/pic/${appointmentInfo?.counselorPic}` },
+                note: appointmentInfo?.note,
                 appointmentDate,
                 appointmentTime,
             });
@@ -153,16 +153,16 @@ function ViewAndEditAppointment() {
                 <div className="messages_list">
                 <div style={{height: "77vh", overflowY: "auto", alignItems: "start", gap: "10px"}} className="white_box cen-col">
                     <h2 style={{color: "black", marginTop: "20px", fontSize: "22px", textDecoration: "underline"}}>Appointment Details</h2>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Student ID:&nbsp;<span>{appointmentInfo.studentSchoolId}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Counselor:&nbsp;<span>{appointmentInfo.counselorName}</span></h3>
+                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Student ID:&nbsp;<span>{appointmentInfo?.studentSchoolId}</span></h3>
+                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Counselor:&nbsp;<span>{appointmentInfo?.counselorName}</span></h3>
                     <h3 style={{paddingTop: "15px", fontSize: "20px", ...centerStyle}}>Status:&nbsp;&nbsp;<span style={{...getStatusColor(getStatus(appointmentInfo)), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 10px"}}>{getStatus(appointmentInfo)}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentInfo.appointmentDate)} by {formatTime(appointmentInfo.appointmentDate)}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Is a Referral?:&nbsp;<span>{appointmentInfo.isReferral ? "Yes" : "No"}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Note:&nbsp;<span>{appointmentInfo.note}</span></h3>
-                    {appointmentInfo.isReferral && <><h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Name:&nbsp;<span>{appointmentInfo.referralInfo.name}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Email:&nbsp;<span>{appointmentInfo.referralInfo.email}</span></h3></>}
+                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentInfo?.appointmentDate)} by {formatTime(appointmentInfo?.appointmentDate)}</span></h3>
+                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Is a Referral?:&nbsp;<span>{appointmentInfo?.isReferral ? "Yes" : "No"}</span></h3>
+                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Note:&nbsp;<span>{appointmentInfo?.note}</span></h3>
+                    {appointmentInfo?.isReferral && <><h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Name:&nbsp;<span>{appointmentInfo?.referralInfo.name}</span></h3>
+                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Email:&nbsp;<span>{appointmentInfo?.referralInfo.email}</span></h3></>}
                 </div>
-                <div onClick={markAsComplete} style={{background: appointmentInfo.completed ? "blue":"green", color: "white", ...centerStyle, padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>{appointmentInfo.completed ? "Mark as Uncompleted" : "Mark as Completed"}</div>
+                <div onClick={markAsComplete} style={{background: appointmentInfo?.completed ? "blue":"green", color: "white", ...centerStyle, padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>{appointmentInfo?.completed ? "Mark as Uncompleted" : "Mark as Completed"}</div>
                 </div>
                 <div className="messages_chat mb_30">
                     <div style={{height: "77vh", overflowY: "auto"}} className="white_box ">

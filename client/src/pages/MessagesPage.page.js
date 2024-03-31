@@ -204,7 +204,7 @@ function MessagesPage() {
                 </div>
     })
 
-    const sortedContactList = contactList.sort((a,b) => {
+    const sortedContactList = contactList?.sort((a,b) => {
         const A = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === a.personId)?.unseenMessages
         const B = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === b.personId)?.unseenMessages
         return B-A

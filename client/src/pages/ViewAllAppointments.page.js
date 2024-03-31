@@ -72,7 +72,7 @@ function ViewAllAppointments() {
         
     }, [])
 
-    const listOfCounselorsHTML = listOfCounselors.map(counselor => {
+    const listOfCounselorsHTML = listOfCounselors?.map(counselor => {
         return <li onClick={() => viewCounselorAppointments(counselor._id, counselor.firstName)} style={{cursor: "pointer"}} key={counselor._id}>
                 <a href>
                     <div className="message_pre_left">
@@ -87,7 +87,7 @@ function ViewAllAppointments() {
             </li>
     })
 
-    const appointmentRowsHTML = currentAppointments.map(appointment => {
+    const appointmentRowsHTML = currentAppointments?.map(appointment => {
         const status = getStatus(appointment)
         return <tr key={appointment._id}>
                     <td>{appointment.studentName}</td>
@@ -113,7 +113,7 @@ function ViewAllAppointments() {
         ((Boolean(selectedCounselor) && currentAppointmentsLoading) ? <CircularProgress size={100} sx={{color:'black', marginTop: "150px", marginLeft: "200px"}}/> : <div style={{height: "80vh", overflowY: "auto"}} className="white_box ">
         <h2 style={{color: "black", textAlign: "center"}}>{selectedCounselor?.name}'s appointments</h2>
         <div className="table-responsive">
-            {currentAppointments.length ? <table className="table">
+            {currentAppointments?.length ? <table className="table">
                 <thead className="table-light">
                     <tr>
                         <th scope="col">Student</th>

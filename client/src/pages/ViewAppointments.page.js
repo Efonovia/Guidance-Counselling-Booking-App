@@ -59,7 +59,7 @@ function ViewAppointments() {
         
     }, [userInfo._id])
 
-    const appointmentRowsHTML = currentAppointments.map(appointment => {
+    const appointmentRowsHTML = currentAppointments?.map(appointment => {
         const status = getStatus(appointment)
         return <tr key={appointment._id}>
                     <td>{appointment.studentName}</td>
@@ -75,7 +75,7 @@ function ViewAppointments() {
     {loading ? <CircularProgress size={100} sx={{color:'black', marginTop: "150px", marginLeft: "200px"}}/> : <div style={{height: "80vh", overflowY: "auto"}} className="white_box ">
     <h2 style={{color: "black", textAlign: "center"}}>Your appointments</h2>
     <div className="table-responsive">
-        {currentAppointments.length ? <table className="table">
+        {currentAppointments?.length ? <table className="table">
             <thead className="table-light">
                 <tr>
                     <th scope="col">Student</th>

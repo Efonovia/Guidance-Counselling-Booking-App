@@ -17,7 +17,7 @@ function MySchedules() {
     const day = formatDate(date);
 
     let finalList = []
-    currentAppointments.forEach(appointment => {
+    currentAppointments?.forEach(appointment => {
       const appointmentDay = formatDate(appointment.appointmentDate)
       if(appointmentDay === day) {
         finalList.push(
