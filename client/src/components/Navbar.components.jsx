@@ -18,7 +18,7 @@ function Navbar({ children }) {
     const navigate = useNavigate()
     const userInfo = useSelector(state => state.user)
     const notificationsInfo = useSelector(state => state.notifications)
-    const hasMessages = notificationsInfo?.messageNotificationsDetails?.some(n => n.unseenMessages)
+    const hasMessages = Boolean(notificationsInfo?.messageNotificationsDetails?.some(n => n.unseenMessages))
     const hasPendingAppointments = Boolean(notificationsInfo?.unApprovedAppointments)
     const location = useLocation()
 
