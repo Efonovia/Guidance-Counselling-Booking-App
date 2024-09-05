@@ -43,7 +43,9 @@ app.use(cors())
 
 
 //ROUTES
-app.get("/", (req, res) => res.send("hello"))
+app.get("/", (req, res) => {
+    res.send("Welcome to Nile University Guidance & Counselling...")
+})
 app.use("/students", studentsRouter)
 app.use("/counselors", counselorsRouter)
 app.use("/messages", messagesRouter)
