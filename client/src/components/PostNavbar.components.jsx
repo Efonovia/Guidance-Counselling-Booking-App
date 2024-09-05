@@ -42,7 +42,7 @@ function PostNavbar({ children, openSideBar }) {
 								<div className="cen-col">
 									<div className='cen-row'>
 										<div className="profile_info">
-											<img style={{objectFit: "cover"}} height={40} width={40} src={`http://localhost:8000/counselors/pic/${userInfo.picturePath}`} alt="alt" />
+											<img style={{objectFit: "cover"}} height={40} width={40} src={`http://localhost:8000/uploads/${userInfo.picturePath}`} alt="alt" />
 										</div>
 
 										<button onClick={logout}>logout</button>

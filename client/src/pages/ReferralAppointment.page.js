@@ -89,7 +89,7 @@ function ReferralAppointment() {
                     return {
                         id: counselor._id,
                         label: counselor.firstName + " " + counselor.lastName,
-                        pic: `http://localhost:8000/counselors/pic/${counselor.picturePath}`
+                        pic: `http://localhost:8000/uploads/${counselor.picturePath}`
                     }
                 })
                 setListOfCounselors(counselorsList);

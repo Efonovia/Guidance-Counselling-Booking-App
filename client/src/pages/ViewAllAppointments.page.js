@@ -77,7 +77,7 @@ function ViewAllAppointments() {
                 <a href>
                     <div className="message_pre_left">
                         <div className="message_preview_thumb">
-                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/counselors/pic/${counselor.picturePath}`} alt=""/>
+                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/uploads/${counselor.picturePath}`} alt=""/>
                         </div>
                         <div className="messges_info">
                             <h4>{counselor.firstName} {counselor.lastName}</h4>

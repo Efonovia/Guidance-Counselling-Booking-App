@@ -119,7 +119,7 @@ function ViewAndEditAppointment() {
                         return {
                             id: counselor._id,
                             label: counselor.firstName + " " + counselor.lastName,
-                            pic: `http://localhost:8000/counselors/pic/${counselor.picturePath}`
+                            pic: `http://localhost:8000/uploads/${counselor.picturePath}`
                         }
                     })
                     setListOfCounselors(counselorsList)
@@ -141,7 +141,7 @@ function ViewAndEditAppointment() {
             const { appointmentDate, appointmentTime } = getDateAndTimeObject(appointmentInfo?.appointmentDate);
             setFormDetails({
                 studentSchoolId: appointmentInfo?.studentSchoolId,
-                counselor: { id: appointmentInfo?.counselorId, label: appointmentInfo?.counselorName, pic: `http://localhost:8000/counselors/pic/${appointmentInfo?.counselorPic}` },
+                counselor: { id: appointmentInfo?.counselorId, label: appointmentInfo?.counselorName, pic: `http://localhost:8000/uploads/${appointmentInfo?.counselorPic}` },
                 note: appointmentInfo?.note,
                 appointmentDate,
                 appointmentTime,

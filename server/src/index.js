@@ -12,6 +12,10 @@ import appointmentsRouter from "./routes/appointment.route.js";
 import { createNewStudent } from "./routes/student.controller.js";
 import multer from "multer";
 import { createNewCounselor } from "./routes/counselor.controller.js";
+import { fileURLToPath } from 'url';
+import path, { dirname } from "path"
+
+const __filename = fileURLToPath(import.meta.url);
 
 
 // CONFIGURATION
@@ -19,7 +23,7 @@ dotenv.config()
 const app = express()
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, 'public/uploads/');
     },
     filename: function (req, file, cb) {
         const userId = req.body.firstName + "_" + req.body.lastName;
@@ -41,7 +45,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors())
 
 
-
+app.use(express.static(path.join(dirname(__filename), "public")));
 //ROUTES
 app.get("/", (req, res) => {
     res.send("Welcome to Nile University Guidance & Counselling...")
