@@ -1,5 +1,6 @@
 import express from "express"
 import { 
+    createNewStudent,
     getAllStudents, 
     getStudent, 
     getStudentPicture, 
@@ -12,5 +13,7 @@ studentsRouter.get("/all", getAllStudents)
 studentsRouter.get("/:id", getStudent)
 studentsRouter.get("/pic/:picturePath", getStudentPicture)
 studentsRouter.post("/login", loginStudent)
+studentsRouter.post("/signup", createNewStudent)
+
 
 export default studentsRouter

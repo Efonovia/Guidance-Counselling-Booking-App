@@ -66,11 +66,6 @@ export const createNewStudent = async (req, res) => {
       } else {
           console.log(`Student with schoolId ${schoolId} not found. creating new student...`);
 
-          let picturePath = "";
-          if (req.file) {
-              picturePath = req.file.filename;
-          }
-
           const newStudent = new StudentDatabase({
             firstName,
             lastName,
@@ -79,7 +74,6 @@ export const createNewStudent = async (req, res) => {
             passwordSalt: salt,
             telephone,
             schoolId,
-            picturePath
           })
 
           newStudent.save().then(() => {

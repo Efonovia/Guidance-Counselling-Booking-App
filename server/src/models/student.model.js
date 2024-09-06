@@ -22,10 +22,6 @@ const StudentSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    picturePath: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,

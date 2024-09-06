@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useDispatch } from "react-redux"
 import { setUser } from '../state';
 import { CircularProgress } from '@mui/material';
@@ -19,15 +18,14 @@ function StudentSignUp() {
         schoolId: "",
         password: "",
         telephone: "",
-        picturePath: null
     })
 
     function handleChange(event) {
-        const { value, name, files } = event.target;
+        const { value, name } = event.target;
 
         setFormDetails(prevFormDetails => ({
             ...prevFormDetails,
-            [name]: name === "picturePath" ? files[0] : value,
+            [name] : value,
         }));
         console.log(formDetails)
     }
@@ -41,7 +39,6 @@ function StudentSignUp() {
             formData.append('schoolId', formDetails.schoolId);
             formData.append('password', formDetails.password);
             formData.append('telephone', formDetails.telephone);
-            formData.append('picturePath', formDetails.picturePath)
             console.log(formDataToJson(formData))
 
             const emptyFields = checkFormFields(formDetails);
@@ -110,25 +107,6 @@ function StudentSignUp() {
                                                 </div>
                                                 <div>
                                                     <input name="telephone" value={formDetails.telephone} onChange={handleChange} type="text" className="form-control" placeholder="Phone Number" />
-                                                </div>
-                                                <div style={{width: "100%"}} className="col-md-12">
-                                                    <div style={{border: "1px dashed #2d1967", height: "50px"}} className="input-group">
-                                                        <div style={{width: '100%'}} className="custom-file">
-                                                            <label style={{display: "flex", width: '100%', height: '100%', flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "1px"}} className="custom-file-label" htmlFor="inputGroupFile03">
-                                                                <span style={{marginTop: "10px", width: '100%', height: '100%'}}> &nbsp;&nbsp;<CloudUploadIcon />&nbsp;Upload a photo of yourself</span>
-                                                                <input
-                                                                    type="file"
-                                                                    accept="image/*"
-                                                                    onChange={handleChange}
-                                                                    style={{display: "none"}}
-                                                                    name="picturePath"
-                                                                    className="custom-file-input"
-                                                                    id="inputGroupFile03"
-                                                                    aria-describedby="inputGroupFileAddon03"/><br></br><br></br>
-                                                                    <span style={{marginTop: "-50px", color: "black"}} id="fileName">{formDetails["picturePath"]?.name}</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <div style={{marginTop: "20px"}}>
                                                     <input name="password" value={formDetails.password} onChange={handleChange} type="password" className="form-control" placeholder="Password" />
