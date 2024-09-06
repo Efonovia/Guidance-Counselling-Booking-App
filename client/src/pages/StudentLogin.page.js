@@ -60,7 +60,7 @@ function StudentLogin() {
                         <h1 style={{textAlign: "center"}}>Signing you in. Hold on...</h1>
                         <br></br>
                         <CircularProgress sx={{color: "blue"}} size={100} />
-                    </div>: <div style={{width: "100vw", height: "100vh", backgroundImage: "url(http://localhost:3000/static/media/home-bg.5bd74799b014ef072512.png)"}} className="main_content_iner ">
+                    </div>: <div style={{width: "100vw", height: "100vh", backgroundImage: "url(https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725663775/home-bg_h5ru2p.png)"}} className="main_content_iner ">
                 <div className="container-fluid p-0">
                     <div className="row justify-content-center">
                         <div className="col-12">

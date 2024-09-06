@@ -5,6 +5,8 @@ import { capitalizeWords } from '../utils';
 import "../styles/general.css"
 import { setUser } from '../state';
 import { useNavigate } from 'react-router-dom';
+import defaultStudentPic from "../assets/img/default_student.png"
+
 
 function PostNavbar({ children, openSideBar }) {
 	const dispatch = useDispatch()
@@ -28,7 +30,7 @@ function PostNavbar({ children, openSideBar }) {
 		dispatch(setUser({ user: null }))
 		navigate("/")
 	}
-
+	const imageSrc = userInfo.type === "student" ? defaultStudentPic : `https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${userInfo.picturePath}`
     return <section style={{paddingBottom: 0}} id={`${userInfo.type}_before`} className="main_content dashboard_part large_header_bg">
 			<div className="container-fluid g-0">
 				<div className="row">
@@ -42,7 +44,7 @@ function PostNavbar({ children, openSideBar }) {
 								<div className="cen-col">
 									<div className='cen-row'>
 										<div className="profile_info">
-											<img style={{objectFit: "cover"}} height={40} width={40} src={`http://localhost:8000/uploads/${userInfo.picturePath}`} alt="alt" />
+											<img style={{objectFit: "cover"}} height={40} width={40} src={imageSrc} alt="alt" />
 										</div>
 
 										<button onClick={logout}>logout</button>

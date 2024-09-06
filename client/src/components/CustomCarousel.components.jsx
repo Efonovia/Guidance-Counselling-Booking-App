@@ -32,7 +32,7 @@ function CustomCarousel(props) {
     const itemsHtml = listOfCounselors.map((counselor, i) => {
       return <div key={i} className='my-carousel-inner'>
               <h3 style={{position: "absolute", textShadow: "2px 2px black"}}>{counselor.firstName} {counselor.lastName}</h3>
-              <img alt="..." src={`http://localhost:8000/uploads/${counselor.picturePath}`} style={{height:"100%"}} />
+              <img alt="..." src={`https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${counselor.picturePath}`} style={{height:"100%"}} />
             </div>
     })
 

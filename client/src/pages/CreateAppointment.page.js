@@ -98,7 +98,7 @@ function CreateAppointment() {
                     return {
                         id: counselor._id,
                         label: counselor.firstName + " " + counselor.lastName,
-                        pic: `http://localhost:8000/uploads/${counselor.picturePath}`
+                        pic: `https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${counselor.picturePath}`
                     }
                 })
                 setListOfCounselors(counselorsList);

@@ -44,7 +44,7 @@ function ViewAllCounselors() {
                 <a href>
                     <div className="message_pre_left">
                         <div className="message_preview_thumb">
-                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/uploads/${counselor.picturePath}`} alt=""/>
+                            <img style={{objectFit: "cover"}} src={`https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${counselor.picturePath}`} alt=""/>
                         </div>
                         <div className="messges_info">
                             <h4>{counselor.firstName} {counselor.lastName}</h4>
@@ -67,7 +67,7 @@ function ViewAllCounselors() {
         {!Boolean(selectedCounselor) ? <h1 style={{textAlign: "center", color: "black", fontSize: "24px"}}>Select a counselor to view their information</h1> : 
         ((Boolean(selectedCounselor) && currentCounselorDetailsLoading) ? <CircularProgress size={100} sx={{color:'black', marginTop: "150px", marginLeft: "200px"}}/> : <div style={{height: "77vh", overflowY: "auto", alignItems: "start", gap: "10px"}} className="white_box cen-col">
             <h2 style={{paddingBottom: "20px", color: "black"}}>Counselor Details</h2>
-            <img style={{objectFit: "cover"}} height={60} width={80} src={`http://localhost:8000/uploads/${currentCounselorDetails?.picturePath}`} alt=""></img>
+            <img style={{objectFit: "cover"}} height={60} width={80} src={`https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${currentCounselorDetails?.picturePath}`} alt=""></img>
             <h3 style={{paddingTop: "15px", fontSize: "24px"}}>First Name:&nbsp;<span>{currentCounselorDetails?.firstName}</span></h3>
             <h3 style={{paddingTop: "15px", fontSize: "24px"}}>Last Name:&nbsp;<span>{currentCounselorDetails?.lastName}</span></h3>
             <h3 style={{paddingTop: "15px", fontSize: "24px"}}>Email&nbsp;<span>{currentCounselorDetails?.email}</span></h3>

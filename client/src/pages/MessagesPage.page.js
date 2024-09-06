@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import { formatDate, formatTime } from '../utils';
+import defaultStudentPic from "../assets/img/default_student.png"
 import { setNotifications } from '../state';
 
 
@@ -172,11 +173,12 @@ function MessagesPage() {
     }, [userInfo._id, userInfo.isAdmin])
 
     const messagesHTML = currentContactMessages?.map(message => {
+        const imageSrc = message.sender.type === "student" ? defaultStudentPic : `https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${message.sender.picture}`
         if(message.sender.id === userInfo._id) {
             return <div key={message._id} className="single_message_chat">
                         <div className="message_pre_left">
                             <div className="message_preview_thumb">
-                                <img style={{objectFit: "cover"}} src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
+                                <img style={{objectFit: "cover"}} src={imageSrc} alt=""/>
                             </div>
                             <div className="messges_info">
                                 <h4>{message.sender.name}</h4>
@@ -195,7 +197,7 @@ function MessagesPage() {
                             <p>{formatDate(message.dateSent)} by {formatTime(message.dateSent)}</p>
                         </div>
                         <div className="message_preview_thumb">
-                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/${message.sender.type}s/pic/${message.sender.picture}`} alt=""/>
+                            <img style={{objectFit: "cover"}} src={imageSrc} alt=""/>
                         </div>
                     </div>
                     <div style={{background: "#c8c8c8"}} className="message_content_view">
@@ -210,12 +212,13 @@ function MessagesPage() {
         return B-A
     })
     const contactListHTML = sortedContactList?.map(person => {
+        const imageSrc = person.type === "student" ? defaultStudentPic : `https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${person.picture}`
         const notification = notificationsInfo.messageNotificationsDetails?.find(noti => noti.personId === person.personId)?.unseenMessages
         return <li onClick={()=>viewContactMessages(person)} style={{cursor: "pointer"}} key={person.personId}>
                     <a href>
                         <div className="message_pre_left">
                             <div className="message_preview_thumb">
-                                <img style={{objectFit: "cover"}} src={`http://localhost:8000/${person.type}s/pic/${person.picture}`} alt=""/>
+                                <img style={{objectFit: "cover"}} src={imageSrc} alt=""/>
                             </div>
                             <div className="messges_info">
                                 <h4 style={{textDecoration: person.personId === selectedContact?.personId ? "underline": "none"}}>{person.personName}</h4>

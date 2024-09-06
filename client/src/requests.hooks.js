@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000"
+const API_URL = "https://nile-gc-api.vercel.app"
 
 
 export const httpSignUpStudent = async (studentDetails) => {

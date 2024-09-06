@@ -89,7 +89,7 @@ function ReferralAppointment() {
                     return {
                         id: counselor._id,
                         label: counselor.firstName + " " + counselor.lastName,
-                        pic: `http://localhost:8000/uploads/${counselor.picturePath}`
+                        pic: `https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${counselor.picturePath}`
                     }
                 })
                 setListOfCounselors(counselorsList);
@@ -104,7 +104,7 @@ function ReferralAppointment() {
         
     }, [])
 
-    return loading ? <CircularProgress size={100} sx={{color: "black", margin: "140px 300px"}}/> : <div style={{width: "100vw", height: "100vh", backgroundImage: "url(http://localhost:3000/static/media/home-bg.5bd74799b014ef072512.png)"}} className="white_box mb_30">
+    return loading ? <CircularProgress size={100} sx={{color: "black", margin: "140px 300px"}}/> : <div style={{width: "100vw", height: "100vh", backgroundImage: "url(https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725663775/home-bg_h5ru2p.png)"}} className="white_box mb_30">
                 <div className="row justify-content-center">
                     <div className="col-lg-6">
                         <div className="modal-content cs_modal">

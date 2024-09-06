@@ -77,7 +77,7 @@ function ViewAllAppointments() {
                 <a href>
                     <div className="message_pre_left">
                         <div className="message_preview_thumb">
-                            <img style={{objectFit: "cover"}} src={`http://localhost:8000/uploads/${counselor.picturePath}`} alt=""/>
+                            <img style={{objectFit: "cover"}} src={`https://res.cloudinary.com/dn6uuvy0b/image/upload/v1725657663/${counselor.picturePath}`} alt=""/>
                         </div>
                         <div className="messges_info">
                             <h4>{counselor.firstName} {counselor.lastName}</h4>
