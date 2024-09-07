@@ -64,7 +64,7 @@ function StudentLogin() {
                 <div className="container-fluid p-0">
                     <div className="row justify-content-center">
                         <div className="col-12">
-                            <div className="dashboard_header mb_50">
+                            <div className="dashboard_header">
                                 <div className="row">
                                     <div style={{margin: "0 auto"}} className="col-lg-6">
                                         <div style={{marginTop: "20%"}} className="dashboard_header_title">

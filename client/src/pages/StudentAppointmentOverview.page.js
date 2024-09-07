@@ -139,15 +139,15 @@ function StudentAppointmentOverview() {
     return loading ? <CircularProgress size={100} sx={{color: "black", margin: "150px 300px"}}/> : (appointmentDetails ? <div className="messages_box_area">
                 <div className="messages_list">
                     <div style={{height: "77vh", overflowY: "auto", alignItems: "start", gap: "10px"}} className="white_box cen-col">
-                        <h2 style={{color: "black", marginTop: "-20px", fontSize: "22px", textDecoration: "underline"}}>Appointment Details</h2>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Student ID:&nbsp;<span>{appointmentDetails?.studentSchoolId}</span></h3>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Counselor:&nbsp;<span>{appointmentDetails?.counselorName}</span></h3>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px", ...centerStyle}}>Status:&nbsp;&nbsp;<span style={{...getStatusColor(getStatus(appointmentDetails)), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 10px"}}>{getStatus(appointmentDetails)}</span></h3>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentDetails?.appointmentDate)} by {formatTime(appointmentDetails?.appointmentDate)}</span></h3>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Is a Referral?:&nbsp;<span>{appointmentDetails?.isReferral ? "Yes" : "No"}</span></h3>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Note:&nbsp;<span>{appointmentDetails?.note}</span></h3>
-                        {appointmentDetails?.isReferral && <><h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Referrer Name:&nbsp;<span>{appointmentDetails?.referralInfo.name}</span></h3>
-                        <h3 style={{lineHeight: "1.1", fontSize: "18px"}}>Referrer Email:&nbsp;<span>{appointmentDetails?.referralInfo.email}</span></h3></>}
+                        <h2 style={{color: "black", marginTop: "-20px", fontSize: "22px", textAlign: "center"}}>Appointment Details</h2>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Student ID:&nbsp;<span>{appointmentDetails?.studentSchoolId}</span></h3>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Counselor:&nbsp;<span>{appointmentDetails?.counselorName}</span></h3>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px", ...centerStyle}}>Status:&nbsp;&nbsp;<span style={{...getStatusColor(getStatus(appointmentDetails)), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 10px"}}>{getStatus(appointmentDetails)}</span></h3>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentDetails?.appointmentDate)} by {formatTime(appointmentDetails?.appointmentDate)}</span></h3>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Is a Referral?:&nbsp;<span>{appointmentDetails?.isReferral ? "Yes" : "No"}</span></h3>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Note:&nbsp;<span>{appointmentDetails?.note}</span></h3>
+                        {appointmentDetails?.isReferral && <><h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Referrer Name:&nbsp;<span>{appointmentDetails?.referralInfo.name}</span></h3>
+                        <h3 style={{lineHeight: "1.1", fontSize: "15px"}}>Referrer Email:&nbsp;<span>{appointmentDetails?.referralInfo.email}</span></h3></>}
                     </div>
                 </div>
                 <div className="messages_chat mb_30">

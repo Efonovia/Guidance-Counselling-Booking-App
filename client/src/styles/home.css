@@ -18,7 +18,7 @@
 
 .home-header > h1 {
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 2.5rem;
     text-align: center;
 }
 
@@ -29,7 +29,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    gap: 30px;
+    gap: 10px;
 }
 
 .main-content > h1 {
@@ -37,7 +37,7 @@
     background-color: #14256a;
     color: white;
     padding: 5px 35px;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .auth-options {

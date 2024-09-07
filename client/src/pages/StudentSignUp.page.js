@@ -63,8 +63,8 @@ function StudentSignUp() {
         }
     }
 
-    return loading ? <div style={{position: "absolute", marginTop: "300px", marginLeft: "20vw", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-                        <h1 style={{textAlign: "center"}}>Creating your account and signing you in. Hold on...</h1>
+    return loading ? <div style={{position: "absolute", marginTop: "200px", marginLeft: "20vw", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                        <h1 style={{textAlign: "center", width: "700px"}}>Creating your account and signing you in. Hold on...</h1>
                         <br></br>
                         <CircularProgress sx={{color: "blue"}} size={100} />
                     </div>:
