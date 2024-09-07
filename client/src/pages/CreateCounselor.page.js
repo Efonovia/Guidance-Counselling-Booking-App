@@ -26,6 +26,14 @@ function CreateCounselor() {
                 [name]: checked,
             }));
         } else {
+            if (name === "picturePath" && files[0]) {
+                const fileSizeInMB = files[0].size / (1024 * 1024); // Convert bytes to MB
+                if (fileSizeInMB >= 4.5) {
+                    alert("Image size exceeds 4.5MB. Please upload a smaller file.");
+                    return; // Exit if file is too large
+                }
+            }
+
             setFormDetails(prevFormDetails => ({
                 ...prevFormDetails,
                 [name]: name === "picturePath" ? files[0] : value,
