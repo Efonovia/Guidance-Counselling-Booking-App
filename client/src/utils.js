@@ -8,7 +8,7 @@ export function checkFormFields(formData) {
     const emptyFields = [];
     console.log(formData)
     for (const field in formData) {
-        if (!formData[field] && field !== "isAdmin") {
+        if (!formData[field] && !["isAdmin", "note"].includes(field)) {
             emptyFields.push(field);
         }
     }
