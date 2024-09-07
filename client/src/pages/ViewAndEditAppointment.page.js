@@ -162,7 +162,7 @@ function ViewAndEditAppointment() {
                     {appointmentInfo?.isReferral && <><h3 style={{paddingTop: "10px", fontSize: "15px"}}>Referrer Name:&nbsp;<span>{appointmentInfo?.referralInfo.name}</span></h3>
                     <h3 style={{paddingTop: "10px", fontSize: "15px"}}>Referrer Email:&nbsp;<span>{appointmentInfo?.referralInfo.email}</span></h3></>}
                 </div>
-                <div onClick={markAsComplete} style={{background: appointmentInfo?.completed ? "blue":"green", color: "white", ...centerStyle, padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>{appointmentInfo?.completed ? "Mark as Uncompleted" : "Mark as Completed"}</div>
+                    <div onClick={markAsComplete} style={{background: appointmentInfo?.completed ? "blue":"green", color: "white", ...centerStyle, marginTop: "-40px", padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>{appointmentInfo?.completed ? "Mark as Uncompleted" : "Mark as Completed"}</div>
                 </div>
                 <div className="messages_chat mb_30">
                     <div style={{height: "77vh", overflowY: "auto"}} className="white_box ">
