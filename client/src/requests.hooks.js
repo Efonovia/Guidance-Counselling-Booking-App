@@ -5,7 +5,10 @@ export const httpSignUpStudent = async (studentDetails) => {
     try {
         const response = await fetch(`${API_URL}/students/signup`, {
             method: "POST",
-            body: studentDetails
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(studentDetails)
         })
         if (response.error) {
             throw new Error('Failed to sign you up. try again');
