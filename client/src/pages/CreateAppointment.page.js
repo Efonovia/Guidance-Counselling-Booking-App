@@ -65,7 +65,7 @@ function CreateAppointment() {
             setLoading(true)
             const studentCurrentAppointment = await httpGetCurrentAppointment(formDetails.studentSchoolId)
 
-            if(studentCurrentAppointment.body) {
+            if(studentCurrentAppointment?.body) {
                 alert("student already has an appointment")
                 return
             }

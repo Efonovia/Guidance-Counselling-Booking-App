@@ -151,16 +151,16 @@ function ViewAndEditAppointment() {
 
     return loading ? <CircularProgress size={100} sx={{color: "black", margin: "150px 300px"}}/> : <div className="messages_box_area">
                 <div className="messages_list">
-                <div style={{height: "77vh", overflowY: "auto", alignItems: "start", gap: "10px"}} className="white_box cen-col">
-                    <h2 style={{color: "black", marginTop: "20px", fontSize: "22px", textDecoration: "underline"}}>Appointment Details</h2>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Student ID:&nbsp;<span>{appointmentInfo?.studentSchoolId}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Counselor:&nbsp;<span>{appointmentInfo?.counselorName}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px", ...centerStyle}}>Status:&nbsp;&nbsp;<span style={{...getStatusColor(getStatus(appointmentInfo)), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 10px"}}>{getStatus(appointmentInfo)}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentInfo?.appointmentDate)} by {formatTime(appointmentInfo?.appointmentDate)}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Is a Referral?:&nbsp;<span>{appointmentInfo?.isReferral ? "Yes" : "No"}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Note:&nbsp;<span>{appointmentInfo?.note}</span></h3>
-                    {appointmentInfo?.isReferral && <><h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Name:&nbsp;<span>{appointmentInfo?.referralInfo.name}</span></h3>
-                    <h3 style={{paddingTop: "15px", fontSize: "20px"}}>Referrer Email:&nbsp;<span>{appointmentInfo?.referralInfo.email}</span></h3></>}
+                <div style={{height: "77vh", overflowY: "auto", alignItems: "start", gap: "1px"}} className="white_box cen-col">
+                    <h2 style={{color: "black", marginTop: "5px", fontSize: "20px", textAlign: "center"}}>Appointment Details</h2>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px"}}>Student ID:&nbsp;<span>{appointmentInfo?.studentSchoolId}</span></h3>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px"}}>Counselor:&nbsp;<span>{appointmentInfo?.counselorName}</span></h3>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px", ...centerStyle}}>Status:&nbsp;&nbsp;<span style={{...getStatusColor(getStatus(appointmentInfo)), ...centerStyle, fontSize: "12px", borderRadius: "5px", padding: "5px 10px"}}>{getStatus(appointmentInfo)}</span></h3>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px", lineHeight: "1.2"}}>Appointment Date/Time:&nbsp;<span>{formatDate(appointmentInfo?.appointmentDate)} by {formatTime(appointmentInfo?.appointmentDate)}</span></h3>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px"}}>Is a Referral?:&nbsp;<span>{appointmentInfo?.isReferral ? "Yes" : "No"}</span></h3>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px"}}>Note:&nbsp;<span>{appointmentInfo?.note}</span></h3>
+                    {appointmentInfo?.isReferral && <><h3 style={{paddingTop: "10px", fontSize: "15px"}}>Referrer Name:&nbsp;<span>{appointmentInfo?.referralInfo.name}</span></h3>
+                    <h3 style={{paddingTop: "10px", fontSize: "15px"}}>Referrer Email:&nbsp;<span>{appointmentInfo?.referralInfo.email}</span></h3></>}
                 </div>
                 <div onClick={markAsComplete} style={{background: appointmentInfo?.completed ? "blue":"green", color: "white", ...centerStyle, padding: "5px 0", cursor: "pointer", borderRadius: "5px"}}>{appointmentInfo?.completed ? "Mark as Uncompleted" : "Mark as Completed"}</div>
                 </div>
