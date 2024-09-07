@@ -49,7 +49,7 @@ function StudentSignUp() {
             }
 
             setLoading(true)
-            const response = await httpSignUpStudent(formData)
+            const response = await httpSignUpStudent(formDataToJson(formData))
             if(response.ok) {
                 dispatch(setUser({ user: { type: "student", ...response.body } }))
                 navigate("/student/appointmentoverview")

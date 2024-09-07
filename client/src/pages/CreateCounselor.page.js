@@ -64,16 +64,15 @@ function CreateCounselor() {
             console.log('Failed to create:', error);
         } finally {
             setLoading(false)
-            // setFormDetails({
-            //     firstName: "",
-            //     lastName: "",
-            //     email: "",
-            //     password: "",
-            //     telephone: "",
-            //     picturePath: null,
-            //     isAdmin: false
-            // })
-            //! UNCOMMENT OPPPPPPPPPPPPPPPPPPPPPPPPP
+            setFormDetails({
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                telephone: "",
+                picturePath: null,
+                isAdmin: false
+            })
         }
     }
 
